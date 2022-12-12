@@ -77,6 +77,7 @@ if(!isset($_SESSION["validarSesion"]))
 						$_GET["pagina"] == "perfil" ||
 						$_GET["pagina"] == "usuarios" ||
 						$_GET["pagina"] == "oee" ||
+                        $_GET["pagina"] == "VisorPerdidas" ||
 						$_GET["pagina"] == "soporte" ||
 						$_GET["pagina"] == "salir")
 						{
@@ -107,6 +108,7 @@ if(!isset($_SESSION["validarSesion"]))
     <!-- Chart.js 3.9.1  -->
     <script type="text/javascript" src="vistas/assets/js/chart.js/dist/chart.js"></script>
     <script src="vistas/assets/js/Oee.js"></script>
+    <script src="vistas/assets/js/VisorPerdidas.js"></script>
 
     
  

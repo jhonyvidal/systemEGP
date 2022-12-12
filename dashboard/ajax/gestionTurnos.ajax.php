@@ -70,6 +70,42 @@ class AjaxTurnos{
 
 		echo json_encode($respuesta);
 	}
+
+	static public function ajaxMostrarTipoParada()
+	{
+		
+		$fechaInicial = null;
+		$fechaFin = null;
+		$type = 1;
+
+		if(isset($_POST["fechaInicio"])){
+			$fechaInicial= $_POST["fechaInicio"];
+			$fechaFin = $_POST["fechaFin"];
+		}
+
+		$perdidas = ControladorGestionTurnos::ctrMostrarVisorPerdidas($fechaInicial, $fechaFin, $type, null);
+		
+		echo json_encode($perdidas);
+	}
+
+	static public function ajaxMostrarTipoActividad()
+	{
+		
+		$fechaInicial = null;
+		$fechaFin = null;
+		$type = 2;
+		$tipoParada = $_POST["tipoParada"];
+
+		if(isset($_POST["fechaInicio"])){
+			$fechaInicial= $_POST["fechaInicio"];
+			$fechaFin = $_POST["fechaFin"];
+		}
+		
+		$perdidas = ControladorGestionTurnos::ctrMostrarVisorPerdidas($fechaInicial, $fechaFin, $type, $tipoParada);
+
+		echo json_encode($perdidas);
+	}
+	
     
 	
 }
@@ -92,7 +128,13 @@ if(isset($_POST["pBuenos"])){
 }
 if(isset($_POST["idTipoParada"])){
     $categoria = new AjaxTurnos();
-    $categoria -> ajaxMostrarActividades();
+    $categoria -> ajaxMostrarTipoParada();
 }
+if(isset($_POST["idTipoActividad"])){
+    $categoria = new AjaxTurnos();
+    $categoria -> ajaxMostrarTipoActividad();
+}
+
+
 
 

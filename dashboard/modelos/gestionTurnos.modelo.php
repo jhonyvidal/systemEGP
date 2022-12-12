@@ -109,6 +109,78 @@ class ModeloGestionTurnos
 	}
 
 /*=============================================
+	Mostrar Visor de Perdidas
+==============================================*/
+
+static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabla, $tipoParada){
+	if($fechaInicial !== null && $type == 2){
+
+		$stmt = Conexion::conectar()->prepare("SELECT B.id_tipoparada as id, B.descripcion, COUNT(B.id) AS cantidad, 
+												SUM(TIMESTAMPDIFF(MINUTE,A.horaInicioP,A.horaFinP)) as total,
+												SUM(C.PBuenos) as buenos, SUM(C.PMalos) as malos
+												FROM `paradasmaquina` A 
+												INNER JOIN actividad B ON B.id = A.idActividad 
+												INNER JOIN turno C ON A.idturno = C.id
+												WHERE A.fechaR BETWEEN :fechaInicial AND :fechaFinal 
+												AND B.id_tipoparada = :tipoParada
+												GROUP BY B.descripcion
+												ORDER BY total DESC");
+		$stmt->bindParam(":fechaInicial", $fechaInicial, PDO::PARAM_STR);
+		$stmt->bindParam(":fechaFinal", $fechaFinal, PDO::PARAM_STR);
+		$stmt->bindParam(":tipoParada", $tipoParada, PDO::PARAM_STR);
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+
+	}else if($type == 2){
+		$stmt = Conexion::conectar()->prepare("SELECT B.id_tipoparada as id, B.descripcion, COUNT(B.id) AS cantidad, 
+											SUM(TIMESTAMPDIFF(MINUTE,A.horaInicioP,A.horaFinP)) as total,
+											SUM(C.PBuenos) as buenos, SUM(C.PMalos) as malos
+											FROM `paradasmaquina` A 
+											INNER JOIN actividad B ON B.id = A.idActividad 
+											INNER JOIN turno C ON A.idturno = C.id
+											WHERE B.id_tipoparada = :tipoParada
+											GROUP BY B.descripcion
+											ORDER BY total DESC");
+		$stmt->bindParam(":tipoParada", $tipoParada, PDO::PARAM_STR);
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+	}else if($fechaInicial !== null && $type == 1){
+
+		$stmt = Conexion::conectar()->prepare("SELECT C.id, C.nombre, COUNT(C.id) AS cantidad, 
+												SUM(TIMESTAMPDIFF(MINUTE,A.horaInicioP,A.horaFinP)) as total,
+												SUM(D.PBuenos) as buenos, SUM(D.PMalos) as malos
+												FROM `paradasmaquina` A 
+												INNER JOIN actividad B ON B.id = A.idActividad 
+												INNER JOIN tipoparada C ON B.id_tipoparada = C.id 
+												INNER JOIN turno D ON A.idturno = D.id
+												WHERE A.fechaR BETWEEN :fechaInicial AND :fechaFinal
+												GROUP BY C.id
+												ORDER BY total DESC");
+
+		$stmt->bindParam(":fechaInicial", $fechaInicial, PDO::PARAM_STR);
+		$stmt->bindParam(":fechaFinal", $fechaFinal, PDO::PARAM_STR);
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+	
+	}else{
+		$stmt = Conexion::conectar()->prepare("SELECT C.id, C.nombre, COUNT(C.id) AS cantidad, 
+												SUM(TIMESTAMPDIFF(MINUTE,A.horaInicioP,A.horaFinP)) as total,
+												SUM(D.PBuenos) as buenos, SUM(D.PMalos) as malos
+												FROM `paradasmaquina` A 
+												INNER JOIN actividad B ON B.id = A.idActividad 
+												INNER JOIN tipoparada C ON B.id_tipoparada = C.id 
+												INNER JOIN turno D ON A.idturno = D.id
+												GROUP BY C.id
+												ORDER BY total DESC");
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+	
+	}
+	$stmt-> close();
+	$stmt = null;
+}
+
+/*=============================================
 	Mostrar empresa /y mostrar maquinas
 ==============================================*/
 	static public function mdlMostrarDpto($tabla, $item, $valor){

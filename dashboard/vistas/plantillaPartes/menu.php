@@ -53,7 +53,7 @@
 
                         <?php if($usuario["rol"] == "admin") { ?>
                             <li class="sidebar-item">
-                            <a href="oee" class='sidebar-link'>
+                            <a href="VisorPerdidas" class='sidebar-link'>
                                 <i class="bi bi-person-plus-fill"></i>
                                 <span>OEE</span>
                             </a>

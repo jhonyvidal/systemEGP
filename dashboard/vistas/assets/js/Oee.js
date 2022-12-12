@@ -112,6 +112,7 @@
           }
       });
     }
+
     window.onload = (event) => {
       for(var i=0; i< $("#cantidad").val(); i++){
         
@@ -151,5 +152,7 @@
 //   setTimeout(() => {
 //     CrearGrafica("",'myChartTest', 'doughnut')
 //   }, 2000);
+
+
 
 

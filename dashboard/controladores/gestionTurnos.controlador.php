@@ -44,6 +44,16 @@ class ControladorGestionTurnos
 	return $respuesta;
 	}
 
+	/*--=====================================
+	Mostrar Visor de Perdidas
+	======================================--*/
+	static public function ctrMostrarVisorPerdidas($fechaInicial, $fechaFin, $type, $tipoParada)
+	{
+		$tabla = "paradasmaquina";
+		$respuesta = ModeloGestionTurnos::mdlVisorPerdidas($fechaInicial, $fechaFin, $type, $tabla, $tipoParada);
+		return $respuesta;
+	}
+
 /*--=====================================
 	Mostrar paradas turno actual
 	======================================--*/
@@ -255,12 +265,11 @@ Eliminar paradas turno actual
 	==============================================--*/
 	static public function ctrMostrarTipoParada($item, $valor)
 	{
-	$tabla = "tipoparada";
-	$respuesta = ModeloGestionTurnos::mdlMostrarDpto($tabla, $item, $valor);
+		$tabla = "tipoparada";
+		$respuesta = ModeloGestionTurnos::mdlMostrarDpto($tabla, $item, $valor);
 
 		foreach ($respuesta as $key => $value){
-		echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-
+			echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
 		}
 	}
 

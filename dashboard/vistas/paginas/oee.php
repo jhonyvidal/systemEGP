@@ -56,46 +56,7 @@ $turnos = ControladorGestionTurnos::ctrMostrarTurnosFinalizados($op, $item, $val
                 </tr>
               </thead>
               <tbody>
-                
-                <!-- <tr>
-                    <td>
-                      1
-                    </td>
-                    <td>
-                      12/10/2022
-                    </td>
-                    <td>
-                      <div class="row">
-                        <div class="col-6" style="text-align:center">
-                            Extrusora-001 
-                            09:25 -18:30
-                        </div>
-                        <div class="col-6">
-                        <canvas id="myChartTest1" width="100" height="100"></canvas>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="circle-container" id="colOEE1"></div>
-                    </td>
-                    <td>
-                      <div class="circle-ciclo" id="colCiclo1"></div>
-                    </td>
-                    <td style="width: 120px;">
-                      <ol>
-                          <li >1.3 Horas</li>
-                          <li >2 Horas</li>
-                      </ol>
-                    </td>
-                    <td>
-                      <ol>
-                          <li >Fallo motor</li>
-                          <li >Mantenimiento</li>
-                      </ol>
-                    </td>
-                </tr> -->
-              
-
+            
               <?php foreach ($turnos as $key => $value): ?>
                  <tr>
                   <td><?php echo $value["id"]; ?></td>
