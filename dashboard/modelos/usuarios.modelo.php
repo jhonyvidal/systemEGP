@@ -16,7 +16,7 @@ class ModeloUsuarios
 	static public function mdlRegistroUsuario($tabla, $datos){
 	    $foto = "vistas/img/usuarios/default/default.png";
 	    $estado = 1;
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(`rol`, `usuarioLink`, `nombre`, `email`, `password`, `verificacion`, `foto`, `estado`) VALUES (:rol, :usuarioLink, :nombre, :email, :password, :verificacion, :foto, :estado)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(`rol`, `usuarioLink`, `nombre`, `email`, `password`, `verificacion`, `foto`, `estado`, `idEmpresa`) VALUES (:rol, :usuarioLink, :nombre, :email, :password, :verificacion, :foto, :estado, :empresa)");
 
 		$stmt->bindParam(":rol", $datos["rol"], PDO::PARAM_STR);
 		$stmt->bindParam(":usuarioLink", $datos["usuario"], PDO::PARAM_STR);
@@ -24,6 +24,7 @@ class ModeloUsuarios
 		$stmt->bindParam(":email", $datos["email"], PDO::PARAM_STR);
 		$stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
 		$stmt->bindParam(":verificacion", $datos["verificacion"], PDO::PARAM_STR);
+		$stmt->bindParam(":empresa", $datos["empresa"], PDO::PARAM_STR);
 		$stmt->bindParam(":foto", $foto, PDO::PARAM_STR);
 		$stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
 		if($stmt->execute()){
@@ -57,7 +58,12 @@ static public function mdlRegistroIngresoUsuarios($idU, $navU, $ipU)
 ==============================================*/
 
 	static public function mdlMostrarUsuarios($tabla, $item, $valor){
-		if($item != null && $valor != null){
+		if($item == 'idEmpresa' && $valor != null){
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt -> execute();
+			return $stmt -> fetchAll();
+		}else if($item != null && $valor != null){
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 			$stmt -> execute();
@@ -88,6 +94,40 @@ static public function mdlRegistroIngresoUsuarios($idU, $navU, $ipU)
 		$stmt-> close();
 
 		$stmt = null;
+		
+	}
+
+	/*=============================================
+	ACTIVAR USUARIO
+	=============================================*/
+
+	static public function mdlActivarUsuario($tabla, $id, $item, $valor){
+		if($id == 1){
+			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item = 1 WHERE id = :id_usuario");
+
+			$stmt -> bindParam(":id_usuario", $valor, PDO::PARAM_INT);
+			if($stmt -> execute()){
+				return "ok";
+			}else{
+				return print_r(Conexion::conectar()->errorInfo());
+			}
+			$stmt-> close();
+	
+			$stmt = null;
+		}else{
+			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item = 0 WHERE id = :id_usuario");
+
+			$stmt -> bindParam(":id_usuario", $valor, PDO::PARAM_INT);
+			if($stmt -> execute()){
+				return "ok";
+			}else{
+				return print_r(Conexion::conectar()->errorInfo());
+			}
+			$stmt-> close();
+	
+			$stmt = null;
+		}
+		
 		
 	}
 

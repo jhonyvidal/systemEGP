@@ -47,10 +47,10 @@ class ControladorGestionTurnos
 	/*--=====================================
 	Mostrar Visor de Perdidas
 	======================================--*/
-	static public function ctrMostrarVisorPerdidas($fechaInicial, $fechaFin, $type, $tipoParada)
+	static public function ctrMostrarVisorPerdidas($fechaInicial, $fechaFin, $type, $tipoParada , $empresa)
 	{
 		$tabla = "paradasmaquina";
-		$respuesta = ModeloGestionTurnos::mdlVisorPerdidas($fechaInicial, $fechaFin, $type, $tabla, $tipoParada);
+		$respuesta = ModeloGestionTurnos::mdlVisorPerdidas($fechaInicial, $fechaFin, $type, $tabla, $tipoParada,  $empresa);
 		return $respuesta;
 	}
 
@@ -122,8 +122,8 @@ Eliminar paradas turno actual
 	======================================--*/
 	static public function ctrMostrarEmpresa($item, $valor, $tabla)
 	{
-	$respuesta = ModeloGestionTurnos::mdlMostrarEmpresa($tabla, $item, $valor);
-	return $respuesta;
+		$respuesta = ModeloGestionTurnos::mdlMostrarEmpresa($item, $valor, $tabla);
+		return $respuesta;
 	}
 
 	/*--=============================================
@@ -131,8 +131,8 @@ Eliminar paradas turno actual
 	==============================================--*/
 	static public function ctrMostrarDpto($item, $valor)
 	{
-	$tabla = "departamento";
-	$respuesta = ModeloGestionTurnos::mdlMostrarDpto($tabla, $item, $valor);
+		$tabla = "departamento";
+		$respuesta = ModeloGestionTurnos::mdlMostrarDpto($tabla, $item, $valor);
 
 		foreach ($respuesta as $key => $value){
 		echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';

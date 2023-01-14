@@ -79,18 +79,18 @@ $turnos = ControladorGestionTurnos::ctrMostrarTurnosFinalizados($op, $item, $val
                   </td> 
                   <td>
                   <?php 
-                      $unidadesEsperadas = 100;
-                      $horasProgramadas = 24;
-                      $item = "idTurno"; 
-                      $valor = $value["id"];
-                      $total = ControladorGestionTurnos::ctrTotalParadasTurno($item, $valor);
-                      $disponibilidad = round((1- (($total["Total"] / 60) / $horasProgramadas)) * 100,1); 
-                      $rendimiento = round((($value["pBuenos"] + $value["pMalos"]) / $unidadesEsperadas) * 100,2);
-                      $calidad = round($value["pMalos"] !== 0 ? (1-($value["pMalos"] / ($value["pBuenos"] + $value["pMalos"]))) * 100 : 100,1);
-                      $newOee =  round((1- (($total["Total"] / 60) / $horasProgramadas) * 
-                                 ((($value["pBuenos"] + $value["pMalos"]) / $unidadesEsperadas) * 
-                                 $value["pMalos"] !== 0 ? 1-($value["pMalos"] / ($value["pBuenos"] + $value["pMalos"])): 100)) * 100,2);
-                      $oee = ((1440 - $total["Total"]) * 100) / 1440;
+                     $unidadesEsperadas = 100;
+                     $horasProgramadas = 24;
+                     $item = "idTurno"; 
+                     $valor = $value["id"];
+                     $total = ControladorGestionTurnos::ctrTotalParadasTurno($item, $valor);
+                     $disponibilidad = round((1- (($total["Total"] / 60) / $horasProgramadas)) * 100,1); 
+                     $rendimiento = round((($value["pBuenos"] + $value["pMalos"]) / $unidadesEsperadas) * 100,2);
+                     $calidad = round($value["pMalos"] == 0 ? 100:(1-($value["pMalos"] / ($value["pBuenos"] + $value["pMalos"]))) * 100 ,1);
+                     $newOee =  round((1- (($total["Total"] / 60) / $horasProgramadas) * 
+                                ((($value["pBuenos"] + $value["pMalos"]) / $unidadesEsperadas) * 
+                                $value["pMalos"] !== 0 ? 1-($value["pMalos"] / ($value["pBuenos"] + $value["pMalos"])): 100)) * 100,2);
+                     $oee = ((1440 - $total["Total"]) * 100) / 1440;
                     ?>
                     <div class="circle-container" id="colOEE<?php echo $key ?>" oee="<?php echo $newOee ?>"></div>
                   </td>

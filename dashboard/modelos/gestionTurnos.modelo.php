@@ -112,7 +112,8 @@ class ModeloGestionTurnos
 	Mostrar Visor de Perdidas
 ==============================================*/
 
-static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabla, $tipoParada){
+static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabla, $tipoParada, $empresa){
+	
 	if($fechaInicial !== null && $type == 2){
 
 		$stmt = Conexion::conectar()->prepare("SELECT B.id_tipoparada as id, B.descripcion, COUNT(B.id) AS cantidad, 
@@ -121,7 +122,8 @@ static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabl
 												FROM `paradasmaquina` A 
 												INNER JOIN actividad B ON B.id = A.idActividad 
 												INNER JOIN turno C ON A.idturno = C.id
-												WHERE A.fechaR BETWEEN :fechaInicial AND :fechaFinal 
+												INNER JOIN usuarios D ON C.idUsuario = D.id 
+												WHERE A.fechaR BETWEEN :fechaInicial AND :fechaFinal AND D.idEmpresa = $empresa 
 												AND B.id_tipoparada = :tipoParada
 												GROUP BY B.descripcion
 												ORDER BY total DESC");
@@ -138,7 +140,8 @@ static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabl
 											FROM `paradasmaquina` A 
 											INNER JOIN actividad B ON B.id = A.idActividad 
 											INNER JOIN turno C ON A.idturno = C.id
-											WHERE B.id_tipoparada = :tipoParada
+											INNER JOIN usuarios D ON C.idUsuario = D.id 
+											WHERE B.id_tipoparada = :tipoParada AND D.idEmpresa = $empresa
 											GROUP BY B.descripcion
 											ORDER BY total DESC");
 		$stmt->bindParam(":tipoParada", $tipoParada, PDO::PARAM_STR);
@@ -153,7 +156,8 @@ static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabl
 												INNER JOIN actividad B ON B.id = A.idActividad 
 												INNER JOIN tipoparada C ON B.id_tipoparada = C.id 
 												INNER JOIN turno D ON A.idturno = D.id
-												WHERE A.fechaR BETWEEN :fechaInicial AND :fechaFinal
+												INNER JOIN usuarios E ON D.idUsuario = E.id 
+												WHERE A.fechaR BETWEEN :fechaInicial AND :fechaFinal AND E.idEmpresa = $empresa 
 												GROUP BY C.id
 												ORDER BY total DESC");
 
@@ -170,6 +174,8 @@ static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabl
 												INNER JOIN actividad B ON B.id = A.idActividad 
 												INNER JOIN tipoparada C ON B.id_tipoparada = C.id 
 												INNER JOIN turno D ON A.idturno = D.id
+												INNER JOIN usuarios E ON D.idUsuario = E.id 
+												WHERE E.idEmpresa = $empresa
 												GROUP BY C.id
 												ORDER BY total DESC");
 		$stmt -> execute();

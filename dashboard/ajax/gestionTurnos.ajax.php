@@ -77,13 +77,14 @@ class AjaxTurnos{
 		$fechaInicial = null;
 		$fechaFin = null;
 		$type = 1;
+		$empresa = $_POST["idEmpresa"];
 
 		if(isset($_POST["fechaInicio"])){
 			$fechaInicial= $_POST["fechaInicio"];
 			$fechaFin = $_POST["fechaFin"];
 		}
 
-		$perdidas = ControladorGestionTurnos::ctrMostrarVisorPerdidas($fechaInicial, $fechaFin, $type, null);
+		$perdidas = ControladorGestionTurnos::ctrMostrarVisorPerdidas($fechaInicial, $fechaFin, $type, null, $empresa);
 		
 		echo json_encode($perdidas);
 	}
@@ -95,13 +96,14 @@ class AjaxTurnos{
 		$fechaFin = null;
 		$type = 2;
 		$tipoParada = $_POST["tipoParada"];
+		$empresa = $_POST["idEmpresa"];
 
 		if(isset($_POST["fechaInicio"])){
 			$fechaInicial= $_POST["fechaInicio"];
 			$fechaFin = $_POST["fechaFin"];
 		}
 		
-		$perdidas = ControladorGestionTurnos::ctrMostrarVisorPerdidas($fechaInicial, $fechaFin, $type, $tipoParada);
+		$perdidas = ControladorGestionTurnos::ctrMostrarVisorPerdidas($fechaInicial, $fechaFin, $type, $tipoParada, $empresa);
 
 		echo json_encode($perdidas);
 	}

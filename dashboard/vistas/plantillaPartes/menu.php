@@ -23,56 +23,79 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item">
-                            <a href="turnos" class='sidebar-link'>
-                                <i class="bi bi-plus-square-dotted"></i>
-                                <span>Turnos</span>
-                            </a>
-                        </li>
+                        <?php
+
+                        if($_SESSION["rol"] == "admin"){
+                         
+                        echo    '<li class="sidebar-item">
+                                    <a href="empresas" class="sidebar-link">
+                                        <i class="bi bi-plus-square-dotted"></i>
+                                        <span>Empresas</span>
+                                    </a>
+                                </li>'; 
+                        }
                         
-                         <li class="sidebar-item">
-                            <a href="turnosFinalizados" class='sidebar-link'>
-                                <i class="bi bi-x-square"></i>
-                                <span>Turnos finalizados</span>
-                            </a>
-                        </li>
+                        if($_SESSION["rol"] == "admin" || $_SESSION["rol"] == "empresa" || $_SESSION["rol"] == "generico"){
+                         
+                            echo '<li class="sidebar-item">
+                                    <a href="turnos" class="sidebar-link">
+                                        <i class="bi bi-plus-square-dotted"></i>
+                                        <span>Turnos</span>
+                                    </a>
+                                </li>'; 
+                        }
 
-                         <li class="sidebar-item">
-                            <a href="departamentos" class='sidebar-link'>
-                                <i class="bi bi-intersect"></i>
-                                <span>Departamentos</span>
-                            </a>
-                        </li>
+                        if($_SESSION["rol"] == "admin" || $_SESSION["rol"] == "empresa"){
+                         
+                            echo ' <li class="sidebar-item">
+                                        <a href="turnosFinalizados" class="sidebar-link">
+                                            <i class="bi bi-x-square"></i>
+                                            <span>Turnos finalizados</span>
+                                        </a>
+                                    </li>'; 
+                        }
 
-                        <li class="sidebar-item">
-                            <a href="perfil" class='sidebar-link'>
-                                <i class="bi bi-person-circle"></i>
-                                <span>Perfil</span>
-                            </a>
-                        </li>
+                        if($_SESSION["rol"] == "admin" || $_SESSION["rol"] == "empresa"){
+                         
+                            echo ' <li class="sidebar-item">
+                                    <a href="departamentos" class="sidebar-link">
+                                        <i class="bi bi-intersect"></i>
+                                        <span>Departamentos</span>
+                                    </a>
+                                </li>'; 
+                        }
 
-                        <?php if($usuario["rol"] == "admin") { ?>
-                            <li class="sidebar-item">
-                            <a href="VisorPerdidas" class='sidebar-link'>
-                                <i class="bi bi-person-plus-fill"></i>
-                                <span>OEE</span>
-                            </a>
-                        </li>
+                        if($_SESSION["rol"] == "admin" || $_SESSION["rol"] == "empresa"  || $_SESSION["rol"] == "generico"){
+                         
+                            echo '  <li class="sidebar-item">
+                                        <a href="perfil" class="sidebar-link">
+                                            <i class="bi bi-person-circle"></i>
+                                            <span>Perfil</span>
+                                        </a>
+                                    </li>'; 
+                        }
 
-                        <li class="sidebar-item">
-                            <a href="usuarios" class='sidebar-link'>
-                                <i class="bi bi-person-plus-fill"></i>
-                                <span>Usuarios</span>
-                            </a>
-                        </li>
-                         <?php } ?>
+                        if($_SESSION["rol"] == "admin" || $_SESSION["rol"] == "empresa"){
+                         
+                            echo '<li class="sidebar-item">
+                                        <a href="VisorPerdidas" class="sidebar-link">
+                                            <i class="bi bi-person-plus-fill"></i>
+                                            <span>OEE</span>
+                                        </a>
+                                    </li>'; 
+                        }
 
-                        <!--<li class="sidebar-item">-->
-                        <!--    <a href="soporte" class='sidebar-link'>-->
-                        <!--        <i class="bi bi-life-preserver"></i>-->
-                        <!--        <span>Soporte</span>-->
-                        <!--    </a>-->
-                        <!--</li>-->
+
+                        if($_SESSION["rol"] == "admin" || $_SESSION["rol"] == "empresa"){
+                         
+                            echo '  <li class="sidebar-item">
+                                        <a href="usuarios" class="sidebar-link">
+                                            <i class="bi bi-person-plus-fill"></i>
+                                            <span>Usuarios</span>
+                                        </a>
+                                    </li>'; 
+                        }
+                        ?>
 
                          <li class="sidebar-item">
                             <a href="salir" class='sidebar-link'>

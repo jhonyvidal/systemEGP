@@ -79,6 +79,7 @@ if(!isset($_SESSION["validarSesion"]))
 						$_GET["pagina"] == "oee" ||
                         $_GET["pagina"] == "VisorPerdidas" ||
 						$_GET["pagina"] == "soporte" ||
+                        $_GET["pagina"] == "empresas" ||
 						$_GET["pagina"] == "salir")
 						{
 						    include "paginas/".$_GET["pagina"].".php";
@@ -101,7 +102,6 @@ if(!isset($_SESSION["validarSesion"]))
     <script src="vistas/assets/js/bootstrap.bundle.min.js"></script>
     <script src="vistas/assets/vendors/apexcharts/apexcharts.js"></script>
     <script src="vistas/assets/js/pages/dashboard.js"></script>
-    <script src="vistas/assets/js/bootstrap.bundle.min.js"></script>
     <script src="vistas/assets/js/script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.min.js"></script>
 
@@ -109,6 +109,8 @@ if(!isset($_SESSION["validarSesion"]))
     <script type="text/javascript" src="vistas/assets/js/chart.js/dist/chart.js"></script>
     <script src="vistas/assets/js/Oee.js"></script>
     <script src="vistas/assets/js/VisorPerdidas.js"></script>
+    <script src="vistas/assets/js/empresa.js"></script>
+    <script src="vistas/assets/js/usuarios.js"></script>
 
     
  

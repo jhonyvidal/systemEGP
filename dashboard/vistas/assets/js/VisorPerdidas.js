@@ -70,6 +70,7 @@ function CrearGraficaVisor(obj,component,label,headers,array){
 
     var datos = new FormData();
 	datos.append("idTipoParada", "");
+    datos.append("idEmpresa",$("#idEmpresa").val());
     datos.append("fechaInicio",$("#fechaInicio").val() );
     datos.append("fechaFin", $("#fechaFin").val());
 
@@ -124,7 +125,8 @@ function CrearGraficaVisor(obj,component,label,headers,array){
     if($("#fechaFin").val() !== ""){
         datos.append("fechaFin",$("#fechaFin").val());
     }
-    
+
+    datos.append("idEmpresa",$("#idEmpresa").val());
     datos.append("tipoParada", tipoParada);
     datos.append("idTipoActividad", "");
     $.ajax({
@@ -181,6 +183,7 @@ function CrearGraficaVisor(obj,component,label,headers,array){
     const unidadesEsperadas = 100;
 
 	var datos = new FormData();
+    datos.append("idEmpresa",$("#idEmpresa").val());
 	datos.append("idTipoParada", "");
 
      $.ajax({

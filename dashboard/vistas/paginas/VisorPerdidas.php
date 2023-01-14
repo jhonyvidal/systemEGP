@@ -70,6 +70,7 @@
                 </select>
               </div>
               <div class="col-2">
+                <input type="hidden" value="<?php echo $_SESSION["empresa"];?>" id="idEmpresa"></input>
                 <button type="submit" class="btn btn-sm btn-primary" id="btnConsultar">Consultar</button>
               </div>  
               <br></div>

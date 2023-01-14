@@ -33,9 +33,8 @@ class ModeloGestionMaquinas
 	Crear Departamento
 ==============================================*/
 	static public function mdlCrearDpto($tabla, $datos){
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(`nombre`, `descripcion`, `idEmpresa`) VALUES (:nombre, :descripcion, :idE)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(`nombre`, `idEmpresa`) VALUES (:nombre, :idE)");
 		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
-		$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
 		$stmt->bindParam(":idE", $datos["idE"], PDO::PARAM_STR);
 		if($stmt->execute()){
 			return "ok";

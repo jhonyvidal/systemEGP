@@ -27,6 +27,32 @@ class AjaxUsuarios{
 		$respuesta = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
 		echo json_encode($respuesta);
 	}
+
+	/*=============================================
+	ACTIVAR USUARIO
+	=============================================*/
+	public $Activar;
+	public function ajaxActivarUsuario(){
+		$id = 1;
+		$item = "estado";
+		$valor = $this->Activar;
+		$respuesta = ControladorUsuarios::ctrActivarUsuario($id,$item, $valor);
+		echo json_encode($respuesta);
+	}
+
+	/*=============================================
+	INACTIVAR USUARIO
+	=============================================*/
+	public $Inactivar;
+	public function ajaxInactivarUsuario(){
+		$id = 0;
+		$item = "estado";
+		$valor = $this->Inactivar;
+		$respuesta = ControladorUsuarios::ctrActivarUsuario($id,$item, $valor);
+		echo json_encode($respuesta);
+	}
+
+	
 }
 
 /*=============================================
@@ -46,3 +72,22 @@ if(isset($_POST["validarUsuario"])){
 	$valUsuario -> validarUsuario = $_POST["validarUsuario"];
 	$valUsuario -> ajaxValidarUsuario();
 }
+
+/*=============================================
+Validar usuario existente
+=============================================*/
+if(isset($_POST["activarId"])){
+	$valUsuario = new AjaxUsuarios();
+	$valUsuario -> Activar = $_POST["activarId"];
+	$valUsuario -> ajaxActivarUsuario();
+}
+
+/*=============================================
+Validar usuario existente
+=============================================*/
+if(isset($_POST["inactivarId"])){
+	$valUsuario = new AjaxUsuarios();
+	$valUsuario -> Inactivar = $_POST["inactivarId"];
+	$valUsuario -> ajaxInactivarUsuario();
+}
+

@@ -1,9 +1,5 @@
 <?php
-/**
-@grcarvajal grcarvajal@gmail.com **Gildardo Restrepo Carvajal**
-20/04/2022 aplicación energine plataforma de destion de sensores
-Controlador de usuarios registro, login y recuperar contraseña.
- */
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
@@ -18,14 +14,14 @@ class ControladorUsuarios
 	{
 		if(isset($_POST["nombreRegistro"]))
 		{
-			$ruta = ControladorRuta::ctrRuta();
+			//$ruta = ControladorRuta::ctrRuta();
 			$tabla = "usuarios";
 			$item = "email";
 			$valor = $_POST["emailRegistro"];
 
-		 $respuesta = ModeloUsuarios::mdlMostrarUsuarios($tabla, $item, $valor);
-		 if($respuesta["email"] == $_POST["emailRegistro"])
-		 {
+		$respuesta = ModeloUsuarios::mdlMostrarUsuarios($tabla, $item, $valor);
+		if($respuesta["email"] == $_POST["emailRegistro"])
+		{
 		        echo '<script>
 					swal({
 						type:"error",
@@ -39,14 +35,23 @@ class ControladorUsuarios
 						}
 					});
 				</script>';
-        	}else{
+        }else{
         		$hashPassword = password_hash($_POST['passRegistro'], PASSWORD_DEFAULT);
 		    	$tabla = "usuarios";
-		    	$datos = array("rol" => "cliente",
-		    				   "usuario" => $_POST["usuarioRegistro"],
+				$rol = "";
+				if($_POST["rolRegistro"]=== 'admin')
+				{
+					$rol="empresa";
+				}
+				else{
+					$rol="generico";
+				}
+		    	$datos = array("rol" => $rol,
+		    				   "usuario" => $_POST["emailRegistro"],
 		    				   "nombre" => $_POST["nombreRegistro"],
 		    				   "email" => $_POST["emailRegistro"],
 		    				   "password" => $hashPassword,
+							   "empresa" => $_POST["empresaRegistro"],
 		    				   "verificacion" => 0
 		    					);
 			    $respuesta = ModeloUsuarios::mdlRegistroUsuario($tabla, $datos);  
@@ -61,7 +66,7 @@ class ControladorUsuarios
 								confirmButtonText: "Cerrar"
 								}).then(function(result){
 								if(result.value){
-									window.location = "'.$ruta.'login";
+									window.location = "usuarios";
 								}
 							});	
 						</script>';
@@ -82,11 +87,31 @@ public function ctrIngresoUsuario()
 		$item = "email";
 		$valor = $_POST["emailIngreso"];
 		 $respuesta = ModeloUsuarios::mdlMostrarUsuarios($tabla, $item, $valor);
+		 if($respuesta["estado"] == 0 ){
+			echo '<script>
+							swal({
+								type:"error",
+								title: "¡ERROR!",
+								text: "¡El usuario se encuentra inactivo!",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar"
+								}).then(function(result){
+								if(result.value){
+									history.back();
+								}
+								});	
+							</script>';
+						 
+			return;
+		 }
 		 if($respuesta["email"] == $_POST["emailIngreso"]  && password_verify($_POST['passIngreso'], $respuesta["password"]))
 		 {
-		 	    session_start();
+		 	    // session_start();
 		 		$_SESSION["validarSesion"] = "ok";
 		 		$_SESSION["idU"] = $respuesta["id"];
+				$_SESSION["rol"] = $respuesta["rol"];
+				$_SESSION["empresa"] = $respuesta["idEmpresa"];
+
 		 		
 		 		$idU = 	$respuesta["id"];
 		 		$navU = $_POST["navegadorU"];
@@ -332,6 +357,23 @@ GENERAR CONTRASEÑA ALEATORIA
 		return $respuesta;
 
 	}
+
+	/*=============================================
+	Activar Usuario
+	=============================================*/
+
+	static public function ctrActivarUsuario($id, $item, $valor){
+
+		$tabla = "usuarios";
+
+		$respuesta = ModeloUsuarios::mdlActivarUsuario($tabla, $id, $item, $valor);
+
+		return $respuesta;
+
+	}
+
+
+	
 	
 /*=============================================
 	Cambiar foto perfil

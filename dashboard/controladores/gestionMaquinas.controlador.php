@@ -90,13 +90,16 @@ static public function ctrCrearDpto()
 	{
 		if(isset($_POST["descripcion"]))
 		{
+			
 		$ruta = ControladorGeneral::ctrRutaApp();
 		$tabla = "departamento";
 		$datos = array("idE" => $_POST["idE"],
     				   "nombre" => $_POST["nombre"],
     				   "descripcion" => $_POST["descripcion"]
     					);
+					
 		$respuesta = ModeloGestionMaquinas::mdlCrearDpto($tabla, $datos);
+		
 		if($respuesta == "ok")
 				    {
 						echo '<script>

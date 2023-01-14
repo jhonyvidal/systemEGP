@@ -84,3 +84,78 @@ $(".tablaUsuarios").DataTable({
 
 });
 
+
+/*=============================================
+ACTIVAR USUARIO
+=============================================*/
+$(".table").on("click", ".btnActivarUsuario", function(){
+
+	var idUsuario = $(this).attr("idUsuario");
+
+	var datos = new FormData();
+ 	datos.append("activarId", idUsuario);
+
+  	$.ajax({
+
+	  url:"ajax/usuarios.ajax.php",
+	  method: "POST",
+	  data: datos,
+	  cache: false,
+      contentType: false,
+      processData: false,
+      success: function(respuesta){
+
+            swal({
+              title: "El usuario ha sido Activado",
+              type: "success",
+              confirmButtonText: "¡Cerrar!"
+            }).then(function(result) {
+                  if (result.value) {
+                    window.location = "usuarios";
+                  }
+            });
+
+      }
+
+  	})
+
+})
+
+
+/*=============================================
+ACTIVAR USUARIO
+=============================================*/
+$(".table").on("click", ".btnInactivarUsuario", function(){
+
+	var idUsuario = $(this).attr("idUsuario");
+
+	var datos = new FormData();
+ 	datos.append("inactivarId", idUsuario);
+
+  	$.ajax({
+
+	  url:"ajax/usuarios.ajax.php",
+	  method: "POST",
+	  data: datos,
+	  cache: false,
+      contentType: false,
+      processData: false,
+      success: function(respuesta){
+
+          swal({
+            title: "El usuario ha sido Inactivo",
+            type: "success",
+            confirmButtonText: "¡Cerrar!"
+          }).then(function(result) {
+                if (result.value) {
+                  window.location = "usuarios";
+                }
+          });
+
+      }
+
+  	})
+
+})
+
+
