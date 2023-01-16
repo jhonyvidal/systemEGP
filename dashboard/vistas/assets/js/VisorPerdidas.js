@@ -1,5 +1,5 @@
 
-function CrearGraficaVisor(obj,component,label,headers,array){
+function CrearGraficaVisor(obj,component,label,headers,array,type){
     // GRAFICA POR CIUDAD //
     const data = [];
     
@@ -13,7 +13,7 @@ function CrearGraficaVisor(obj,component,label,headers,array){
     const ctx = document.getElementById(component).getContext('2d');
    
     const instance =  new Chart(ctx, {
-        type: 'bar',
+        type: type,
         data: {
             labels: headers,
             datasets: [{
@@ -66,7 +66,7 @@ function CrearGraficaVisor(obj,component,label,headers,array){
   function consultaTipoParada(){
 
     const horasProgramadas = 24;
-    const unidadesEsperadas = 100;
+    const unidadesEsperadas = 100 * 5;
 
     var datos = new FormData();
 	datos.append("idTipoParada", "");
@@ -99,10 +99,11 @@ function CrearGraficaVisor(obj,component,label,headers,array){
             });
             Chart.getChart("visor").destroy(), Chart.getChart("visor2").destroy(),
             Chart.getChart("visor3").destroy(), Chart.getChart("visor4").destroy()
-            CrearGraficaVisor("",'visor','Disponibilidad',headers, array);
-            CrearGraficaVisor("",'visor2','Rendimiento',headers, array2);
-            CrearGraficaVisor("",'visor3','Calidad',headers, array3);
-            CrearGraficaVisor("",'visor4','OEE',headers, array4);
+            CrearGraficaVisor("",'visor','Disponibilidad',headers, array,'bar');
+            CrearGraficaVisor("",'visor2','Rendimiento',headers, array2,'bar');
+            CrearGraficaVisor("",'visor3','Calidad',headers, array3,'bar');
+            CrearGraficaVisor("",'visor4','OEE',headers, array4,'bar');
+            CrearGraficaVisor("",'visorStep1','OEE',headers, array4,'pie');
 
 		},
         err:function(error){
@@ -115,7 +116,7 @@ function CrearGraficaVisor(obj,component,label,headers,array){
   function consultaActividad(){
 
     const horasProgramadas = 24;
-    const unidadesEsperadas = 100;
+    const unidadesEsperadas = 100 * 5;
 
     var tipoParada = $("#VisorTipoParada").val();
     var datos = new FormData();
@@ -154,10 +155,12 @@ function CrearGraficaVisor(obj,component,label,headers,array){
             });
             Chart.getChart("visor").destroy(), Chart.getChart("visor2").destroy(),
             Chart.getChart("visor3").destroy(), Chart.getChart("visor4").destroy()
-            CrearGraficaVisor("",'visor','Disponibilidad',headers, array);
-            CrearGraficaVisor("",'visor2','Rendimiento',headers, array2);
-            CrearGraficaVisor("",'visor3','Calidad',headers, array3);
-            CrearGraficaVisor("",'visor4','OEE',headers, array4);
+            CrearGraficaVisor("",'visor','Disponibilidad',headers, array,'bar');
+            CrearGraficaVisor("",'visor2','Rendimiento',headers, array2,'bar');
+            CrearGraficaVisor("",'visor3','Calidad',headers, array3,'bar');
+            CrearGraficaVisor("",'visor4','OEE',headers, array4,'bar');
+            CrearGraficaVisor("",'visorStep1','OEE',headers, array4,'pie');
+
        },
        err:function(error){
            console.log (error);
@@ -180,7 +183,8 @@ function CrearGraficaVisor(obj,component,label,headers,array){
   function onload() {
     
     const horasProgramadas = 24;
-    const unidadesEsperadas = 100;
+    const unidadesEsperadas = 100 * 5;
+
 
 	var datos = new FormData();
     datos.append("idEmpresa",$("#idEmpresa").val());
@@ -197,22 +201,42 @@ function CrearGraficaVisor(obj,component,label,headers,array){
       	dataType:"json",
       	success:function(res){
             console.log (res);
-            array= [], array2=[], array3=[], array4=[]
+            array= [], array2=[], array3=[], array4=[], arrayTotal=[]
             headers=[]
+            TotalDis=0,TotalRen=0,TotalCal=0,
             res.forEach(function(ind) {
-                var Disponibilidad = Math.round((1- ((parseInt(ind.total) / 60) / horasProgramadas)) * 100,1);
-                var Rendimiento = Math.round(((parseInt(ind.buenos) + parseInt(ind.malos)) / unidadesEsperadas) * 100,2)
-                var Calidad = Math.round(parseInt(ind.malos) !== 0 ? (1-(parseInt(ind.malos) / (parseInt(ind.buenos) + parseInt(ind.malos)))) * 100 : 100,1)
+                var Disponibilidad = (1- ((parseFloat(ind.total) / 60) / horasProgramadas)).toFixed(2);
+                var Rendimiento = ((parseFloat(ind.buenos) + parseFloat(ind.malos)) / unidadesEsperadas).toFixed(2)
+                var Calidad = (parseFloat(ind.malos) !== 0 ? (1-(parseFloat(ind.malos) / (parseFloat(ind.buenos) + parseFloat(ind.malos))))  : 100).toFixed(2)
                 array.push(Disponibilidad)
                 array2.push(Rendimiento)
                 array3.push(Calidad)
-                array4.push(Disponibilidad * Rendimiento * Calidad)
+                array4.push((Disponibilidad * Rendimiento * Calidad * 100).toFixed(2))
                 headers.push(ind.nombre)
+                TotalDis = parseFloat(TotalDis)+  parseFloat(Disponibilidad);
+                TotalRen = parseFloat(TotalRen) + parseFloat(Rendimiento);
+                TotalCal = parseFloat(TotalCal)  +  parseFloat(Calidad);
             });
-            CrearGraficaVisor("",'visor','Disponibilidad',headers, array);
-            CrearGraficaVisor("",'visor2','Rendimiento',headers, array2);
-            CrearGraficaVisor("",'visor3','Calidad',headers, array3);
-            CrearGraficaVisor("",'visor4','OEE',headers, array4);
+            
+            TotalOEE=0;
+            array4.forEach(function(ind) {
+                TotalOEE = parseFloat(TotalOEE) + parseFloat(ind)
+            });
+            headerTotal=['OEE Total'];
+            TotalOeeArray=[TotalOEE]
+
+            arrayTotal.push(TotalDis), arrayTotal.push(TotalRen),arrayTotal.push(TotalCal)
+            headerTotal2=['Disponibilidad','Rendimiento','Calidad']
+           
+
+            CrearGraficaVisor("",'visor','Disponibilidad',headers, array ,'bar');
+            CrearGraficaVisor("",'visor2','Rendimiento',headers, array2 ,'bar');
+            CrearGraficaVisor("",'visor3','Calidad',headers, array3 ,'bar');
+            // CrearGraficaVisor("",'visor4','OEE',headers, array4 ,'bar');
+            CrearGraficaVisor("",'visorStep1','OEE',headerTotal, TotalOeeArray ,'pie');
+            CrearGraficaVisor("",'visorStep2','OEE',headerTotal2, arrayTotal ,'pie');
+            
+            
 		},
         err:function(error){
             console.log (error);
@@ -221,3 +245,21 @@ function CrearGraficaVisor(obj,component,label,headers,array){
 
   }
   onload();
+
+
+  $("#visorStep1").click(function(){
+    $("#step1").hide()
+    $("#step2").show()
+    $(".breadOee").removeClass("colorActiveBread")
+    $(".breadDet").removeClass("colorActiveBread")
+    $(".breadGen").addClass("colorActiveBread")
+    
+  })
+
+  $("#visorStep2").click(function(){
+    $("#step2").hide()
+    $("#step3").show()
+    $(".breadOee").removeClass("colorActiveBread")
+    $(".breadDet").addClass("colorActiveBread")
+    $(".breadGen").removeClass("colorActiveBread")
+  })

@@ -3,10 +3,15 @@
 * {
 	box-sizing: border-box;
 }
-
+label{
+	font-family: Nunito;
+    color: #25396f;
+    font-weight: 700;
+	font-size: 20px;
+}
 
 body {
-	background-image: linear-gradient(45deg, #4b50da, #7971eb);
+	/* background-image: linear-gradient(45deg, #4b50da, #7971eb); */
 	font-family: 'Muli', sans-serif;
 	/* display: flex; */
 	align-items: center;

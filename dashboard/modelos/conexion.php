@@ -12,6 +12,8 @@ class Conexion
 		$link = new PDO("mysql:host=localhost;dbname=eklycsco_egp",
 			            "root",
 			            "");
+						
+		$link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		$link->exec("set names utf8");
 

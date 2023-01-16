@@ -72,10 +72,43 @@
               <div class="col-2">
                 <input type="hidden" value="<?php echo $_SESSION["empresa"];?>" id="idEmpresa"></input>
                 <button type="submit" class="btn btn-sm btn-primary" id="btnConsultar">Consultar</button>
-              </div>  
+              </div> 
+              <div class="col-12 order-md-2">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                      <ol class="breadcrumb">
+                          <li class="breadcrumb-item breadOee colorActiveBread">OEE Total</li>
+                          <li class="breadcrumb-item breadGen">Visor General</li>
+                          <li class="breadcrumb-item breadDet">Visor Detallado</li>
+                      </ol>
+                </nav>
+              </div> 
+              
               <br></div>
 
-            <div class="row">
+            
+
+
+            <div class="row mt-5" id="step1">
+              <div class="col-3 text-center">
+              </div>
+              <div class="col-6 text-center">
+                  <canvas id="visorStep1" width="100" height="100"></canvas>
+              </div>
+              <div class="col-3 text-center">
+              </div>
+            </div>
+
+            <div class="row mt-5" id="step2" style="display:none">
+              <div class="col-3 text-center">
+              </div>
+              <div class="col-6 text-center">
+                  <canvas id="visorStep2" width="100" height="100"></canvas>
+              </div>
+              <div class="col-3 text-center">
+              </div>
+            </div>
+
+            <div class="row" id="step3" style="display:none">
               <div class="col-6">
                   <canvas id="visor" width="100" height="100" ></canvas>
               </div>
@@ -85,9 +118,9 @@
               <div class="col-6">
                   <canvas id="visor3" width="100" height="100" ></canvas>
               </div>
-              <div class="col-6">
+              <!-- <div class="col-6">
                   <canvas id="visor4" width="100" height="100" ></canvas>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

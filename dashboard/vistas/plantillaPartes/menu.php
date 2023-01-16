@@ -55,12 +55,22 @@
                                     </li>'; 
                         }
 
+                        // if($_SESSION["rol"] == "admin" || $_SESSION["rol"] == "empresa"){
+                         
+                        //     echo ' <li class="sidebar-item">
+                        //             <a href="departamentos" class="sidebar-link">
+                        //                 <i class="bi bi-intersect"></i>
+                        //                 <span>Departamentos</span>
+                        //             </a>
+                        //         </li>'; 
+                        // }
+
                         if($_SESSION["rol"] == "admin" || $_SESSION["rol"] == "empresa"){
                          
                             echo ' <li class="sidebar-item">
-                                    <a href="departamentos" class="sidebar-link">
+                                    <a href="recurso" class="sidebar-link">
                                         <i class="bi bi-intersect"></i>
-                                        <span>Departamentos</span>
+                                        <span>Recursos</span>
                                     </a>
                                 </li>'; 
                         }

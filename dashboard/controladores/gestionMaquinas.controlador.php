@@ -20,6 +20,18 @@ static public function ctrMostrarDptoEmpresa($valor)
 		$respuesta = ModeloGeneral::mdlMostrarDatos($op, $item, $valor, $estado, $tabla);
 		return $respuesta;
 	}
+	/*--=====================================
+	Consultar recurso de la empresa
+======================================--*/	
+static public function ctrMostrarRecursoEmpresa($valor)
+{
+	$op = 2;
+	$estado = null;
+	$item = "idEmpresa";
+	$tabla = "recurso";
+	$respuesta = ModeloGeneral::mdlMostrarDatos($op, $item, $valor, $estado, $tabla);
+	return $respuesta;
+}
 
 /*--=====================================
 	Consultar las maquinas del departamentos de la empresa
@@ -33,6 +45,18 @@ static public function ctrMostrarMaquinasDptoEmpresa($valor)
 		$respuesta = ModeloGeneral::mdlMostrarDatos($op, $item, $valor, $estado, $tabla);
 		return $respuesta;
 	}
+/*--=====================================
+	Consultar los productos del recurso de la empresa
+======================================--*/	
+static public function ctrMostrarProductosRecurso($valor)
+{
+	$op = 2;
+	$estado = null;
+	$item = "id_recurso";
+	$tabla = "producto";
+	$respuesta = ModeloGeneral::mdlMostrarDatos($op, $item, $valor, $estado, $tabla);
+	return $respuesta;
+}
 /*--=====================================
 	Consultar las maquinas por id maquina
 ======================================--*/	
@@ -82,11 +106,48 @@ static public function ctrCrearMaquina()
 				}
 		}
 	}
+	/*--=====================================
+	Crear Producto
+	======================================--*/	
+	static public function ctrCrearProducto()
+	{
+		if(isset($_POST["descripcionProducto"]))
+		{
+		$ruta = ControladorGeneral::ctrRutaApp();
+		$tabla = "producto";
+		$datos = array("id" => $_POST["id"],
+						"id_recurso" => $_POST["idDpto"],
+						"descripcion" => $_POST["descripcionProducto"],
+						"medida" => $_POST["medida"],
+						"velocidad" => $_POST["velocidad"]
+						);
+		$respuesta = ModeloGestionMaquinas::mdlCrearProducto($tabla, $datos);
+		if($respuesta == "ok")
+					{
+						$_SESSION["idDpto"] = $_POST["idDpto"];
+						$_SESSION["nombreD"] = $_POST["descripcion"];
+						echo '<script>
+							swal({
+								type:"success",
+								title: "¡PRODUCTO CREADO CORRECTAMENTE!",
+								text: "¡Ver maquinas!",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar"
+								}).then(function(result){
+								if(result.value){
+									window.location = "'.$ruta.'productos";
+								}
+							});	
+						</script>';
+										
+				}
+		}
+	}
 
-/*--=====================================
-	Crear Departamento
-======================================--*/	
-static public function ctrCrearDpto()
+	/*--=====================================
+		Crear Departamento
+	======================================--*/	
+	static public function ctrCrearDpto()
 	{
 		if(isset($_POST["descripcion"]))
 		{
@@ -119,6 +180,45 @@ static public function ctrCrearDpto()
 				}
 		}
 	}
+
+	/*--=====================================
+		Crear Recurso
+	======================================--*/	
+	static public function ctrCrearRecurso()
+	{
+		if(isset($_POST["procesoRecurso"]))
+		{
+
+		$ruta = ControladorGeneral::ctrRutaApp();
+		$tabla = "recurso";
+		$datos = array("id"=> $_POST["idRecurso"],
+					   "idE" => $_POST["idE"],
+    				   "proceso" => $_POST["procesoRecurso"],
+    				   "descripcion" => $_POST["descripcionRecurso"]
+    					);
+					
+		$respuesta = ModeloGestionMaquinas::mdlCrearRecurso($tabla, $datos);
+		
+		if($respuesta == "ok")
+				    {
+						echo '<script>
+							swal({
+								type:"success",
+								title: "¡RECURSO CREADO CORRECTAMENTE!",
+								text: "¡Ver Recursos!",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar"
+								}).then(function(result){
+								if(result.value){
+									window.location = "'.$ruta.'recurso";
+								}
+							});	
+						</script>';
+										
+				}
+		}
+	}
+
 /*--=====================================
 Eliminar maquina
 ======================================--*/
@@ -132,6 +232,18 @@ static public function ctrEliminarMaquina()
 		}
 	}
 /*--=====================================
+Eliminar maquina
+======================================--*/
+static public function ctrEliminarProducto()
+{
+if(isset($_POST["idEProducto"]))
+	{
+	$tabla = "producto";
+	$idP = $_POST["idEProducto"];
+	$respuesta = ModeloGeneral::mdlEliminar($idP, $tabla);
+	}
+}
+/*--=====================================
 Eliminar Departamento
 ======================================--*/
 static public function ctrEliminarDpto()
@@ -143,5 +255,17 @@ static public function ctrEliminarDpto()
 		$respuesta = ModeloGeneral::mdlEliminar($idP, $tabla);
 		}
 	}
+/*--=====================================
+Eliminar Recurso
+======================================--*/
+static public function ctrEliminarRecurso()
+{
+if(isset($_POST["idER"]))
+	{
+	$tabla = "recurso";
+	$idP = $_POST["idER"];
+	$respuesta = ModeloGeneral::mdlEliminar($idP, $tabla);
+	}
+}
 
 } 

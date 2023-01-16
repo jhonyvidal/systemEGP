@@ -11,32 +11,43 @@
 
 
 	<?php
-		require_once "../../dashboard/controladores/gestionMaquinas.controlador.php";
-		require_once "../../dashboard/modelos/general.modelo.php";
-		require_once "../../dashboard/controladores/gestionTurnos.controlador.php";
-		require_once "../../dashboard/modelos/gestionTurnos.modelo.php";
+		if(isset($_GET["empresa"])){
+			// require_once "../../dashboard/controladores/gestionMaquinas.controlador.php";
+			require_once "../../dashboard/modelos/general.modelo.php";
+			require_once "../../dashboard/controladores/gestionTurnos.controlador.php";
+			require_once "../../dashboard/modelos/gestionTurnos.modelo.php";
+			require_once "../../dashboard/controladores/empresa.controlador.php";
+			require_once "../../dashboard/modelos/empresa.modelo.php";
 
-		$maquina = ControladorGestionMaquinas::ctrMostrarMaquinasPorId(1);;
-		foreach ($maquina as $key => $value) {
-            $request[$key] = $value;
-        }
+			$item = 'id';
+			$valor = $_GET["empresa"];
+			$empresa = ControladorEmpresas::ctrMostrarEmpresa($item,$valor);
+
+			foreach ($empresa as $key => $value) {
+				$request[$key] = $value;
+			}
+		}else{
+			echo '<script>
+					window.location = "'.$rutaInicio.'login";
+				</script>';	 		 	 	
+		}
     ?>
 <img src="FullScreenIcon.webp" id="fullScreenImg" alt="FullScreen">
 <!-- partial:index.partial.html -->
 <div class="courses-container" id="step1">
 	<div class="course">
 		<div class="course-preview">
-			<h6><?php echo $request["nombre"]; ?></h6>
+			<h6>Sistema EGP</h6>
 			<h2><?php echo $request["nombre"]; ?></h2>
-			<a href="#"><?php echo $request["producto"]; ?></a>
-			<h6><?php echo $request["velocidad"]; ?></h6>
-			<h6><?php echo $request["tiempoMinutos"]; ?> Min</h6>
+			<a href="#"><?php echo $request["nit"]; ?></a>
+			<h6><?php echo $request["direccion"]; ?></h6>
+			<input type="hidden" class="form-control"  id="idU" value="<?php echo $_GET["idU"]?>" readonly>
 		</div>
 		<div class="course-info">
 			<div class="progress-container">
 				<div class="progress"></div>
 				<span class="progress-text">
-				<?php echo $request["velocidad"]; ?> <?php echo $request["producto"]; ?>
+				<?php echo $request["email"]; ?>
 				</span>
 			</div>
 			<h6>Contador de paradas</h6>
@@ -49,8 +60,8 @@
 							<option value="">Seleccionar una opción</option>
 								<?php
 
-									$item = null;
-									$valor = null;
+									$item = 'idEmpresa';
+									$valor = $_GET["empresa"];
 
 									$categorias = ControladorGestionTurnos::ctrMostrarRecursos($item,$valor);
 
@@ -115,17 +126,15 @@
 <div class="courses-container" id="step2">
 	<div class="course" >
 		<div class="course-preview">
-			<h6><?php echo $request["nombre"]; ?></h6>
 			<h2><?php echo $request["nombre"]; ?></h2>
-			<a href="#"><?php echo $request["producto"]; ?></a>
-			<h6><?php echo $request["velocidad"]; ?></h6>
-			<h6><?php echo $request["tiempoMinutos"]; ?> Min</h6>
+			<a href="#"><?php echo $request["nit"]; ?></a>
+			<h6><?php echo $request["direccion"]; ?></h6>
 		</div>
 		<div class="course-info">
 			<div class="progress-container">
 				<div class="progress"></div>
 				<span class="progress-text">
-				<?php echo $request["velocidad"]; ?> <?php echo $request["producto"]; ?>
+				<?php echo $request["email"]; ?>
 				</span>
 			</div>
 			<h6>Contador de paradas</h6>
@@ -216,7 +225,7 @@
 					</div>
 				</div>
 				</li>
-				<li>
+				<!-- <li>
 					<div class="divbtnPlus firstDivPlus">
 						<button  id="1" class="btnPlus btnPlusFunction">+</button>
 					</div>
@@ -224,7 +233,7 @@
 						<button  id="2" class="btnPlus btnPlusFunction">-</button>
 					</div>
 
-				</li>
+				</li> -->
 			</ul>
 			<ul>
 				<li>
@@ -235,7 +244,7 @@
 					</div>
 				</div>
 				</li>
-				<li>
+				<!-- <li>
 					<div class="divbtnPlus firstDivPlus">
 						<button  id="3" class="btnPlus btnPlusFunction">+</button>
 					</div>
@@ -243,7 +252,7 @@
 						<button  id="4" class="btnPlus btnPlusFunction">-</button>
 					</div>
 
-				</li>
+				</li> -->
 			</ul>
 			<div  style="text-align: center;">
 				<button  id="finishMachine" class="btn">Finalizar Turno</button>

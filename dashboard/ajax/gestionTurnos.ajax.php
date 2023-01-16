@@ -41,8 +41,18 @@ class AjaxTurnos{
 	{
 
 		$item = "id_tipoparada";
-		$valor = $_POST["idTipoParada"];
+		$valor = $_POST["idTipoParadaScreen"];
 		$respuesta = ControladorGestionTurnos::ctrMostrarActividades($item,$valor);
+        echo json_encode($respuesta);
+		
+	}
+
+	static public function ajaxMostrarArticulos()
+	{
+
+		$item = "id_recurso";
+		$valor = $_POST["idTipoRecursoScreen"];
+		$respuesta = ControladorGestionTurnos::ctrMostrarProductos($item,$valor);
         echo json_encode($respuesta);
 		
 	}
@@ -136,6 +146,15 @@ if(isset($_POST["idTipoActividad"])){
     $categoria = new AjaxTurnos();
     $categoria -> ajaxMostrarTipoActividad();
 }
+if(isset($_POST["idTipoParadaScreen"])){
+    $categoria = new AjaxTurnos();
+    $categoria -> ajaxMostrarActividades();
+}
+if(isset($_POST["idTipoRecursoScreen"])){
+    $categoria = new AjaxTurnos();
+    $categoria -> ajaxMostrarArticulos();
+}
+
 
 
 

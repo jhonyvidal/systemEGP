@@ -132,12 +132,9 @@ Eliminar paradas turno actual
 	static public function ctrMostrarDpto($item, $valor)
 	{
 		$tabla = "departamento";
-		$respuesta = ModeloGestionTurnos::mdlMostrarDpto($tabla, $item, $valor);
-
-		foreach ($respuesta as $key => $value){
-		echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-
-		}
+		$respuesta = ModeloGestionTurnos::mdlMostrarRecursos( $item, $valor, $tabla);
+		return $respuesta;
+		
 	}
 
 	/*--=============================================
@@ -307,6 +304,17 @@ Eliminar paradas turno actual
 	{
 
 		$tabla = "actividad";
+		$respuesta = ModeloGestionTurnos::mdlMostrarActividades($item, $valor, $tabla);
+		return $respuesta;
+		
+	}
+	/*--=============================================
+	Mostrar Productos
+	==============================================--*/
+	static public function ctrMostrarProductos($item, $valor)
+	{
+
+		$tabla = "producto";
 		$respuesta = ModeloGestionTurnos::mdlMostrarActividades($item, $valor, $tabla);
 		return $respuesta;
 		

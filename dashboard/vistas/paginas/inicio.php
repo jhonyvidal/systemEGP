@@ -53,14 +53,21 @@
                                     </div>
                                 </div>
                                 <p>
+                                
                                 <div class="form-group position-relative has-icon-left mb-2">
                                     <select class="form-control form-control-xl" aria-label="Default select example" required name="idDpto">
                                       <option>Selecione el departamento</option>
                                       <?php
-                                        // $item = "idEmpresa"; 
-                                        // $valor = $empresa["id"]; 
-                                        //   $dpto = new ControladorGestionTurnos();
-                                        //   $dpto -> ctrMostrarDpto($item, $valor); 
+
+                                        $item = "idEmpresa"; 
+                                        $valor = $empresa["id"]; 
+
+                                        $categorias = ControladorGestionTurnos::ctrMostrarDpto($item,$valor);
+
+                                        foreach ($categorias as $key => $value) {
+                                            echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                                        }
+
                                         ?>
                                     </select>
                                     <div class="form-control-icon">
@@ -70,8 +77,8 @@
                                 <input type="submit" id="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-3 auth-colorBtn" value="Crear Turno">
                             </form>
                           <?php 
-                                // $creaTurno = new ControladorGestionTurnos();
-                                // $creaTurno -> ctrCreaTurno(); 
+                                $creaTurno = new ControladorGestionTurnos();
+                                $creaTurno -> ctrCreaTurno(); 
                           ?>
 
                         </div>
@@ -80,6 +87,10 @@
                 <div class="col-6 col-lg-6">
                     <div class="card">
                         <div class="card-body">
+                            <h3>Crear Link Producción</h3>
+                            <a href="http://localhost/EGP/EGPV2/vistas/ScreenView/index.php?empresa=<?php echo $empresa["id"] ?>&idU=<?php echo $_SESSION["idU"]?>">
+                                <input type="button" id="link" class="btn btn-primary btn-block btn-lg shadow-lg mt-3 auth-colorBtn" value="Crear Link">
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -44,7 +44,7 @@ $(document).ready(function(){
 		
 		var datos = new FormData();
 		datos.append("horaInicioUI", horaInicio);
-		datos.append("idU", 3);
+		datos.append("idU", $("#idU").val());
 		datos.append("idDpto", 4);
 		datos.append("idProducto", $("#Artículo").val());
 
@@ -242,7 +242,7 @@ $(document).ready(function(){
 	$("#tipoParada").change(function(){
 		var idTipoParada = $(this).children("option:selected").val();
 		var datos = new FormData();
-			datos.append("idTipoParada", idTipoParada);
+			datos.append("idTipoParadaScreen", idTipoParada);
 
 		$.ajax({
 			url: "../../dashboard/ajax/gestionTurnos.ajax.php",
@@ -258,6 +258,43 @@ $(document).ready(function(){
 					for (item of respuesta){
 						$("#actividad").append(
 							'<option value="'+item.id+'">'+item.descripcion+'</option>'
+						)
+					}
+				},
+				error:function(err){
+					console.log(err)
+				}
+		})
+
+	});
+
+	
+	/*=============================================
+		 RECURSOS SELECT CHANGES 
+	=============================================*/
+	$("#Recurso").change(function(){
+		var idTipoRecurso = $(this).children("option:selected").val();
+		var datos = new FormData();
+			datos.append("idTipoRecursoScreen", idTipoRecurso);
+
+		$.ajax({
+			url: "../../dashboard/ajax/gestionTurnos.ajax.php",
+			method: "POST",
+				data: datos,
+				cache: false,
+				contentType: false,
+				processData: false,
+				dataType:"json",
+				success: function(respuesta){
+					console.log(respuesta)
+					$("#Artículo").html("");
+					$("#Artículo").append(
+						'<option value="">Seleccionar una opción</option>'
+					)
+					
+					for (item of respuesta){
+						$("#Artículo").append(
+							'<option value="'+item.id+'" unidad="'+item.unidad+'" velocidad="'+item.velocidad+'">'+item.descripcion+'</option>'
 						)
 					}
 				},

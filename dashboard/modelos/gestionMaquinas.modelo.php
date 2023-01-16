@@ -29,6 +29,26 @@ class ModeloGestionMaquinas
 		$stmt->close();
 		$stmt = null;
 	}
+	/*=============================================
+	Crear Producto
+==============================================*/
+static public function mdlCrearProducto($tabla, $datos){
+	$tiempo = 60;
+	$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(`id`,`id_recurso`, `descripcion`,`unidad`, `medida`, `velocidad`) VALUES (:id,:id_recurso, :descripcion, :medida,:medida, :velocidad)");
+	$stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
+	$stmt->bindParam(":id_recurso", $datos["id_recurso"], PDO::PARAM_STR);
+	$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
+	$stmt->bindParam(":medida", $datos["medida"], PDO::PARAM_STR);
+	$stmt->bindParam(":velocidad", $datos["velocidad"], PDO::PARAM_STR);
+	// $stmt->bindParam(":tiempo", $tiempo, PDO::PARAM_INT);
+	if($stmt->execute()){
+		return "ok";
+	}else{
+		return print_r(Conexion::conectar()->errorInfo());
+	}
+	$stmt->close();
+	$stmt = null;
+}
 /*=============================================
 	Crear Departamento
 ==============================================*/
@@ -36,6 +56,24 @@ class ModeloGestionMaquinas
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(`nombre`, `idEmpresa`) VALUES (:nombre, :idE)");
 		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 		$stmt->bindParam(":idE", $datos["idE"], PDO::PARAM_STR);
+		if($stmt->execute()){
+			return "ok";
+		}else{
+			return print_r(Conexion::conectar()->errorInfo());
+		}
+		$stmt->close();
+		$stmt = null;
+	}	
+
+	/*=============================================
+	Crear Recurso
+	==============================================*/
+	static public function mdlCrearRecurso($tabla, $datos){
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(`id`,`idEmpresa`, `descripcion`,`proceso`,`estado`) VALUES (:id,:idE,:descripcion,:proceso,1 )");
+		$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
+		$stmt->bindParam(":proceso", $datos["proceso"], PDO::PARAM_STR);
+		$stmt->bindParam(":idE", $datos["idE"], PDO::PARAM_STR);
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
 		if($stmt->execute()){
 			return "ok";
 		}else{

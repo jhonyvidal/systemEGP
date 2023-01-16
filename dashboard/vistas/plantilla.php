@@ -80,6 +80,8 @@ if(!isset($_SESSION["validarSesion"]))
                         $_GET["pagina"] == "VisorPerdidas" ||
 						$_GET["pagina"] == "soporte" ||
                         $_GET["pagina"] == "empresas" ||
+                        $_GET["pagina"] == "recurso" ||
+                        $_GET["pagina"] == "productos" ||
 						$_GET["pagina"] == "salir")
 						{
 						    include "paginas/".$_GET["pagina"].".php";
