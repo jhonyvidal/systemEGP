@@ -34,6 +34,19 @@ static public function ctrMostrarRecursoEmpresa($valor)
 }
 
 /*--=====================================
+	Consultar tipo Parada de la empresa
+======================================--*/	
+static public function ctrMostrarRecursoTipoParada($valor)
+{
+	$op = 2;
+	$estado = null;
+	$item = "idEmpresa";
+	$tabla = "tipoparada";
+	$respuesta = ModeloGeneral::mdlMostrarDatos($op, $item, $valor, $estado, $tabla);
+	return $respuesta;
+}
+
+/*--=====================================
 	Consultar las maquinas del departamentos de la empresa
 ======================================--*/	
 static public function ctrMostrarMaquinasDptoEmpresa($valor)
@@ -54,6 +67,18 @@ static public function ctrMostrarProductosRecurso($valor)
 	$estado = null;
 	$item = "id_recurso";
 	$tabla = "producto";
+	$respuesta = ModeloGeneral::mdlMostrarDatos($op, $item, $valor, $estado, $tabla);
+	return $respuesta;
+}
+/*--=====================================
+	Consultar los actividades del tipo parada de la empresa
+======================================--*/	
+static public function ctrMostrarActividadTipoParada($valor)
+{
+	$op = 2;
+	$estado = null;
+	$item = "id_tipoparada";
+	$tabla = "actividad";
 	$respuesta = ModeloGeneral::mdlMostrarDatos($op, $item, $valor, $estado, $tabla);
 	return $respuesta;
 }
@@ -143,6 +168,40 @@ static public function ctrCrearMaquina()
 				}
 		}
 	}
+	/*--=====================================
+	Crear Actividad
+	======================================--*/	
+	static public function ctrCrearActividad()
+	{
+		if(isset($_POST["descripcionActividad"]))
+		{
+		$ruta = ControladorGeneral::ctrRutaApp();
+		$tabla = "actividad";
+		$datos = array("id_tipoparada" => $_POST["idDpto"],
+						"descripcion" => $_POST["descripcionActividad"],
+						);
+		$respuesta = ModeloGestionMaquinas::mdlCrearActividad($tabla, $datos);
+		if($respuesta == "ok")
+					{
+						$_SESSION["idDpto"] = $_POST["idDpto"];
+						$_SESSION["nombreD"] = $_POST["descripcionActividad"];
+						echo '<script>
+							swal({
+								type:"success",
+								title: "ACTIVIDAD CREADA CORRECTAMENTE!",
+								text: "¡Ver tipo paradas!",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar"
+								}).then(function(result){
+								if(result.value){
+									window.location = "'.$ruta.'tipoParada";
+								}
+							});	
+						</script>';
+										
+				}
+		}
+	}
 
 	/*--=====================================
 		Crear Departamento
@@ -219,6 +278,43 @@ static public function ctrCrearMaquina()
 		}
 	}
 
+	/*--=====================================
+		Crear Tipo Parada
+	======================================--*/	
+	static public function ctrCrearTipoParada()
+	{
+		if(isset($_POST["nombreTipoParada"]))
+		{
+
+		$ruta = ControladorGeneral::ctrRutaApp();
+		$tabla = "tipoparada";
+		$datos = array("idE" => $_POST["idE"],
+    				   "nombre" => $_POST["nombreTipoParada"],
+    				   "descripcion" => $_POST["descripcionTipoParada"]
+    					);
+					
+		$respuesta = ModeloGestionMaquinas::mdlCrearTipoParada($tabla, $datos);
+		
+		if($respuesta == "ok")
+				    {
+						echo '<script>
+							swal({
+								type:"success",
+								title: "¡TIPO PARADA CREADA CORRECTAMENTE!",
+								text: "¡Ver Recursos!",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar"
+								}).then(function(result){
+								if(result.value){
+									window.location = "'.$ruta.'tipoParada";
+								}
+							});	
+						</script>';
+										
+				}
+		}
+	}
+
 /*--=====================================
 Eliminar maquina
 ======================================--*/
@@ -244,6 +340,18 @@ if(isset($_POST["idEProducto"]))
 	}
 }
 /*--=====================================
+Eliminar Actividades
+======================================--*/
+static public function ctrEliminarActividad()
+{
+if(isset($_POST["idEActividad"]))
+	{
+	$tabla = "actividad";
+	$idP = $_POST["idEActividad"];
+	$respuesta = ModeloGeneral::mdlEliminar($idP, $tabla);
+	}
+}
+/*--=====================================
 Eliminar Departamento
 ======================================--*/
 static public function ctrEliminarDpto()
@@ -264,6 +372,18 @@ if(isset($_POST["idER"]))
 	{
 	$tabla = "recurso";
 	$idP = $_POST["idER"];
+	$respuesta = ModeloGeneral::mdlEliminar($idP, $tabla);
+	}
+}
+/*--=====================================
+Eliminar Tipo Parada
+======================================--*/
+static public function ctrEliminarTipoParada()
+{
+if(isset($_POST["idET"]))
+	{
+	$tabla = "tipoparada";
+	$idP = $_POST["idET"];
 	$respuesta = ModeloGeneral::mdlEliminar($idP, $tabla);
 	}
 }

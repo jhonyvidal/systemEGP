@@ -30,63 +30,66 @@
     <div class="row">
       <div class="col-12 col-lg-12">          
         <div class="card sobraCrearLink"> 
-          <div class="card-body">
+          <div class="card-body"  >
 
-            <div class="row" >
-              <div class="col-3">
-              <select  class="form-select" name="tipoDefiltro" id="tipoDefiltro">
-								<option value="1">Tipo de Parada</option>
-                <option value="2">Actividad</option>
-							</select>
-              </div>
-              <div class="col-7">
-              </div>
-              <div class="col-2">
-                <a href="oee" class="btn btn-sm btn-secondary float-end">Ver Detalle</a>
-              </div>  
-            </div><br>
-            <div class="row" id="rowVisor1">
-              <div class="col-3">
-                <input type="date" name="fechaInicio" id="fechaInicio" value="" class="form-control">
-              </div>
-              <div class="col-3">
-                <input type="date" name="fechaFin" id="fechaFin" value="" class="form-control">
-              </div>
-              <div class="col-3" style="display:none" id="selecTipoParada">
-                <select  class="form-select" name="tipoParada" id="VisorTipoParada" require>
-                  <option value="">Seleccionar Tipo Parada</option>
-                    <?php
-
-                      $item = null;
-                      $valor = null;
-
-                      $categorias = ControladorGestionTurnos::ctrMostrarTipoParadaTurno($item,$valor);
-
-                      foreach ($categorias as $key => $value) {
-                        echo '<option value="'.$value["id"].'" unidad="'.$value["unidad"].'" velocidad="'.$value["velocidad"].'"  >'.$value["descripcion"].'</option>';
-                      }
-
-                    ?>
+            <div id="formfilter" style="display:none">
+              <div class="row">
+                <div class="col-3">
+                <select  class="form-select" name="tipoDefiltro" id="tipoDefiltro">
+                  <option value="1">Tipo de Parada</option>
+                  <option value="2">Actividad</option>
                 </select>
-              </div>
-              <div class="col-2">
-                <input type="hidden" value="<?php echo $_SESSION["empresa"];?>" id="idEmpresa"></input>
-                <button type="submit" class="btn btn-sm btn-primary" id="btnConsultar">Consultar</button>
-              </div> 
-              <div class="col-12 order-md-2">
-                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                      <ol class="breadcrumb">
-                          <li class="breadcrumb-item breadOee colorActiveBread">OEE Total</li>
-                          <li class="breadcrumb-item breadGen">Visor General</li>
-                          <li class="breadcrumb-item breadDet">Visor Detallado</li>
-                      </ol>
-                </nav>
-              </div> 
-              
+                </div>
+                <div class="col-7">
+                </div>
+                <div class="col-2">
+                  <a href="oee" class="btn btn-sm btn-secondary float-end">Ver Detalle</a>
+                </div>  
+              </div><br>
+              <div class="row" id="rowVisor1">
+                <div class="col-3">
+                  <input type="date" name="fechaInicio" id="fechaInicio" value="" class="form-control">
+                </div>
+                <div class="col-3">
+                  <input type="date" name="fechaFin" id="fechaFin" value="" class="form-control">
+                </div>
+                <div class="col-3" style="display:none" id="selecTipoParada">
+                  <select  class="form-select" name="tipoParada" id="VisorTipoParada" require>
+                    <option value="">Seleccionar Tipo Parada</option>
+                      <?php
+
+                        $item = null;
+                        $valor = null;
+
+                        $categorias = ControladorGestionTurnos::ctrMostrarTipoParadaTurno($item,$valor);
+
+                        foreach ($categorias as $key => $value) {
+                          echo '<option value="'.$value["id"].'" unidad="'.$value["unidad"].'" velocidad="'.$value["velocidad"].'"  >'.$value["descripcion"].'</option>';
+                        }
+
+                      ?>
+                  </select>
+                </div>
+                <div class="col-2">
+                  <input type="hidden" value="<?php echo $_SESSION["empresa"];?>" id="idEmpresa"></input>
+                  <button type="submit" class="btn btn-sm btn-primary" id="btnConsultar">Consultar</button>
+                </div> 
+                <!-- <div class="col-12 order-md-2">
+                  <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item breadOee colorActiveBread">OEE Total</li>
+                            <li class="breadcrumb-item breadGen">Visor General</li>
+                            <li class="breadcrumb-item breadDet">Visor Detallado</li>
+                        </ol>
+                  </nav>
+                </div>  -->
+                
               <br></div>
-
+            </div>
+            <div class="p-3 text-center">
+              <h2 id="tittleDinamic">Visor OEE</h2>  
+            </div>
             
-
 
             <div class="row mt-5" id="step1">
               <div class="col-3 text-center">

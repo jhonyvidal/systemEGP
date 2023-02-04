@@ -81,7 +81,9 @@ if(!isset($_SESSION["validarSesion"]))
 						$_GET["pagina"] == "soporte" ||
                         $_GET["pagina"] == "empresas" ||
                         $_GET["pagina"] == "recurso" ||
+                        $_GET["pagina"] == "tipoParada" ||
                         $_GET["pagina"] == "productos" ||
+                        $_GET["pagina"] == "actividades" ||
 						$_GET["pagina"] == "salir")
 						{
 						    include "paginas/".$_GET["pagina"].".php";

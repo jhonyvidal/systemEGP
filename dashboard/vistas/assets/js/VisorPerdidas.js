@@ -98,11 +98,10 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
                 headers.push(ind.nombre)
             });
             Chart.getChart("visor").destroy(), Chart.getChart("visor2").destroy(),
-            Chart.getChart("visor3").destroy(), Chart.getChart("visor4").destroy()
+            Chart.getChart("visor3").destroy(),
             CrearGraficaVisor("",'visor','Disponibilidad',headers, array,'bar');
             CrearGraficaVisor("",'visor2','Rendimiento',headers, array2,'bar');
             CrearGraficaVisor("",'visor3','Calidad',headers, array3,'bar');
-            CrearGraficaVisor("",'visor4','OEE',headers, array4,'bar');
             CrearGraficaVisor("",'visorStep1','OEE',headers, array4,'pie');
 
 		},
@@ -154,11 +153,10 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
                 headers.push(ind.descripcion)
             });
             Chart.getChart("visor").destroy(), Chart.getChart("visor2").destroy(),
-            Chart.getChart("visor3").destroy(), Chart.getChart("visor4").destroy()
+            Chart.getChart("visor3").destroy()
             CrearGraficaVisor("",'visor','Disponibilidad',headers, array,'bar');
             CrearGraficaVisor("",'visor2','Rendimiento',headers, array2,'bar');
             CrearGraficaVisor("",'visor3','Calidad',headers, array3,'bar');
-            CrearGraficaVisor("",'visor4','OEE',headers, array4,'bar');
             CrearGraficaVisor("",'visorStep1','OEE',headers, array4,'pie');
 
        },
@@ -173,8 +171,10 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
     var tipo = $(this).val();
     if(tipo === "1"){
         $("#selecTipoParada").hide()
+        $("#tittleDinamic").html('Visor Por Tipo Parada')
     }else{
         $("#selecTipoParada").show()
+        $("#tittleDinamic").html('Visor Por Actividad')
        
     }
   })
@@ -185,10 +185,9 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
     const horasProgramadas = 24;
     const unidadesEsperadas = 100 * 5;
 
-
-	var datos = new FormData();
+	  var datos = new FormData();
     datos.append("idEmpresa",$("#idEmpresa").val());
-	datos.append("idTipoParada", "");
+	  datos.append("idTipoParada", "");
 
      $.ajax({
 
@@ -250,16 +249,18 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
   $("#visorStep1").click(function(){
     $("#step1").hide()
     $("#step2").show()
-    $(".breadOee").removeClass("colorActiveBread")
-    $(".breadDet").removeClass("colorActiveBread")
-    $(".breadGen").addClass("colorActiveBread")
-    
+    // $(".breadOee").removeClass("colorActiveBread")
+    // $(".breadDet").removeClass("colorActiveBread")
+    // $(".breadGen").addClass("colorActiveBread")
+    $("#tittleDinamic").html('Visor General')
   })
 
   $("#visorStep2").click(function(){
     $("#step2").hide()
     $("#step3").show()
-    $(".breadOee").removeClass("colorActiveBread")
-    $(".breadDet").addClass("colorActiveBread")
-    $(".breadGen").removeClass("colorActiveBread")
+    // $(".breadOee").removeClass("colorActiveBread")
+    // $(".breadDet").addClass("colorActiveBread")
+    // $(".breadGen").removeClass("colorActiveBread")
+    $("#tittleDinamic").html('Visor Por Tipo Parada')
+    $("#formfilter").show();
   })
