@@ -102,6 +102,7 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
             CrearGraficaVisor("",'visor','Disponibilidad',headers, array,'bar');
             CrearGraficaVisor("",'visor2','Rendimiento',headers, array2,'bar');
             CrearGraficaVisor("",'visor3','Calidad',headers, array3,'bar');
+            CrearGraficaVisor("",'visor4','OEE',headers, array4,'bar');
             CrearGraficaVisor("",'visorStep1','OEE',headers, array4,'pie');
 
 		},
@@ -153,10 +154,11 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
                 headers.push(ind.descripcion)
             });
             Chart.getChart("visor").destroy(), Chart.getChart("visor2").destroy(),
-            Chart.getChart("visor3").destroy()
+            Chart.getChart("visor3").destroy(),Chart.getChart("visor4").destroy()
             CrearGraficaVisor("",'visor','Disponibilidad',headers, array,'bar');
             CrearGraficaVisor("",'visor2','Rendimiento',headers, array2,'bar');
             CrearGraficaVisor("",'visor3','Calidad',headers, array3,'bar');
+            CrearGraficaVisor("",'visor4','OEE',headers, array4 ,'bar');
             CrearGraficaVisor("",'visorStep1','OEE',headers, array4,'pie');
 
        },
@@ -231,7 +233,7 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
             CrearGraficaVisor("",'visor','Disponibilidad',headers, array ,'bar');
             CrearGraficaVisor("",'visor2','Rendimiento',headers, array2 ,'bar');
             CrearGraficaVisor("",'visor3','Calidad',headers, array3 ,'bar');
-            // CrearGraficaVisor("",'visor4','OEE',headers, array4 ,'bar');
+            CrearGraficaVisor("",'visor4','OEE',headers, array4 ,'bar');
             CrearGraficaVisor("",'visorStep1','OEE',headerTotal, TotalOeeArray ,'pie');
             CrearGraficaVisor("",'visorStep2','OEE',headerTotal2, arrayTotal ,'pie');
             

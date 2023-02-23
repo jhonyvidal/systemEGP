@@ -190,9 +190,9 @@ static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabl
 	Mostrar empresa /y mostrar maquinas
 ==============================================*/
 	static public function mdlMostrarDpto($tabla, $item, $valor){
-			$stmt = Conexion::conectar()->prepare("SELECT *,a.idActividad,b.id,b.id_tipoparada,b.descripcion AS de
+			$stmt = Conexion::conectar()->prepare("SELECT *,a.idActividad,b.codigo,b.id_tipoparada,b.descripcion AS de, c.descripcion AS nombreParada
 												   FROM $tabla a 
-												   INNER JOIN actividad b ON a.idActividad=b.id
+												   INNER JOIN actividad b ON a.idActividad=b.codigo
 												   INNER JOIN tipoparada c ON b.id_tipoparada=c.id
 												   WHERE $item = :$item  ");
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);

@@ -31,7 +31,6 @@
       <div class="col-12 col-lg-12">          
         <div class="card sobraCrearLink"> 
           <div class="card-body"  >
-
             <div id="formfilter" style="display:none">
               <div class="row">
                 <div class="col-3">
@@ -121,9 +120,9 @@
               <div class="col-6">
                   <canvas id="visor3" width="100" height="100" ></canvas>
               </div>
-              <!-- <div class="col-6">
+              <div class="col-6">
                   <canvas id="visor4" width="100" height="100" ></canvas>
-              </div> -->
+              </div>
             </div>
           </div>
         </div>

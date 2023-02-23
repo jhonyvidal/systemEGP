@@ -71,6 +71,18 @@ static public function ctrMostrarProductosRecurso($valor)
 	return $respuesta;
 }
 /*--=====================================
+	Consultar los producto por Id
+======================================--*/	
+static public function ctrMostrarProductoId($valor)
+{
+	$op = 1;
+	$estado = null;
+	$item = "id";
+	$tabla = "producto";
+	$respuesta = ModeloGeneral::mdlMostrarDatos($op, $item, $valor, $estado, $tabla);
+	return $respuesta;
+}
+/*--=====================================
 	Consultar los actividades del tipo parada de la empresa
 ======================================--*/	
 static public function ctrMostrarActividadTipoParada($valor)

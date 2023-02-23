@@ -40,18 +40,27 @@ $turnos = ControladorGestionTurnos::ctrMostrarTurnosFinalizados($op, $item, $val
         <div class="card sobraCrearLink"> 
           <input id="cantidad"  type="hidden" value="<?php echo Count($turnos); ?>">       
           <div class="card-body">
+            <div class="row">
+                <div class="col-10">
+                </div>
+                <div class="col-2">
+                  <a href="vistas/Excel/ExcelOee.php?user=<?php echo $usuario["id"]?>" class="btn btn-sm btn-success float-end">Descargar Excel</a>
+                </div> 
+            </div><br>
             <div class="table-responsive">
             <table id="table_id" class="table table-striped table-bordered dt-responsive">
               <thead>
                 <tr>
                   <th>#</th>
+                  <th>Fecha</th>
                   <th>Trabajo</th>
-                  <th>Maquina</th>
+                  <th>Maquina-Producción</th>
                   <th>OEE</th>
                   <th>Disponibilidad</th>
                   <th>Rendimiento</th>
                   <th>Calidad</th>
                   <th>Tipo</th>
+                  <th>Actividad</th>
                   <th>Tiempo</th>
                 </tr>
               </thead>
@@ -60,6 +69,7 @@ $turnos = ControladorGestionTurnos::ctrMostrarTurnosFinalizados($op, $item, $val
               <?php foreach ($turnos as $key => $value): ?>
                  <tr>
                   <td><?php echo $value["id"]; ?></td>
+                  <td><?php echo $value["fechaR"]; ?></td>
                   <td><?php echo $value["horaInicio"]?><br><?php echo $value["horaFin"]?> </td>
                   <td style="min-width: 170px;">
                     <div class="row">
@@ -79,7 +89,8 @@ $turnos = ControladorGestionTurnos::ctrMostrarTurnosFinalizados($op, $item, $val
                   </td> 
                   <td>
                   <?php 
-                     $unidadesEsperadas = 100;
+                     $producto = ControladorGestionMaquinas::ctrMostrarProductoId($value['idProducto']);
+                     $unidadesEsperadas = $producto['velocidad'];
                      $horasProgramadas = 24;
                      $item = "idTurno"; 
                      $valor = $value["id"];
@@ -108,9 +119,12 @@ $turnos = ControladorGestionTurnos::ctrMostrarTurnosFinalizados($op, $item, $val
                     $valor = $value["id"];
                     $paradas = ControladorGestionTurnos::ctrMostrarParadasTurnoActual($item, $valor);
                     foreach ($paradas as $keyParada => $valueParada){
-                      echo $valueParada["nombre"]; ?></br><?php
+                      echo $valueParada["nombreParada"]; ?></br><?php
                     }
                     ?></td>
+                     <td><?php  foreach ($paradas as $keyParada => $valueParada){
+                      echo $valueParada["de"]; ?></br><?php
+                    }?></td>
                   <td><?php  foreach ($paradas as $keyParada => $valueParada){
                       echo $valueParada["horaInicioP"].' '.$valueParada["horaFinP"]; ?></br><?php
                     }?></td>
