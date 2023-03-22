@@ -309,6 +309,17 @@ Eliminar paradas turno actual
 		
 	}
 	/*--=============================================
+	Mostrar Causas
+	==============================================--*/
+	static public function ctrMostrarCausas($item, $valor)
+	{
+
+		$tabla = "causa";
+		$respuesta = ModeloGestionTurnos::mdlMostrarActividades($item, $valor, $tabla);
+		return $respuesta;
+		
+	}
+	/*--=============================================
 	Mostrar Productos
 	==============================================--*/
 	static public function ctrMostrarProductos($item, $valor)

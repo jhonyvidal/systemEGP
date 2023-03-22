@@ -159,6 +159,7 @@ $(document).ready(function(){
 			datos.append("horaF", time);
 			datos.append("idTurno", idTurno);
 			datos.append("idActividad", $("#actividad").val());
+			datos.append("idCausa", $("#causa").val());
 
 			$.ajax({
 				url: "../../dashboard/ajax/gestionTurnos.ajax.php",
@@ -253,8 +254,11 @@ $(document).ready(function(){
 				processData: false,
 				dataType:"json",
 				success: function(respuesta){
-					console.log(respuesta)
+					console.log(respuesta);
 					$("#actividad").html("");
+					$("#actividad").append(
+						'<option value="">selecciona una actividad</option>'
+					);
 					for (item of respuesta){
 						$("#actividad").append(
 							'<option value="'+item.id+'">'+item.descripcion+'</option>'
@@ -268,6 +272,36 @@ $(document).ready(function(){
 
 	});
 
+	/*=============================================
+		 ACTIVIDADES SELECT CHANGES 
+	=============================================*/
+	$("#actividad").change(function(){
+		var idActividad = $(this).children("option:selected").val();
+		var datos = new FormData();
+			datos.append("idActividadScreen", idActividad);
+
+		$.ajax({
+			url: "../../dashboard/ajax/gestionTurnos.ajax.php",
+			method: "POST",
+				data: datos,
+				cache: false,
+				contentType: false,
+				processData: false,
+				dataType:"json",
+				success: function(respuesta){
+					console.log(respuesta)
+					$("#causa").html("");
+					for (item of respuesta){
+						$("#causa").append(
+							'<option value="'+item.id+'">'+item.descripcion+'</option>'
+						)
+					}
+				},
+				error:function(err){
+					console.log(err)
+				}
+		})
+	});
 	
 	/*=============================================
 		 RECURSOS SELECT CHANGES 

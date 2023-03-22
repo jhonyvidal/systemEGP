@@ -49,7 +49,7 @@ static public function mdlContarRegistros($tabla)
 	$op = 3, buscar un valores por id con estado 1 o 0, devuelve array un valores
 	$op = 4, traer todos los datos de una tabla
 ======================================================================================*/
-static public function mdlMostrarDatos($op, $item, $valor, $estado, $tabla){
+	static public function mdlMostrarDatos($op, $item, $valor, $estado, $tabla){
 		switch($op) {
 		case 1:
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
@@ -78,7 +78,22 @@ static public function mdlMostrarDatos($op, $item, $valor, $estado, $tabla){
 		$stmt-> close();
 		$stmt = null;
 	}
+
+	static public function mdlMostrarProducto($op, $item, $valor, $estado, $tabla){
+
+		$stmt = Conexion::conectar()->prepare("SELECT *,A.descripcion AS nombre, B.descripcion AS recurso, B.proceso FROM $tabla A
+											INNER JOIN recurso B ON A.id_recurso = B.id
+											WHERE A.$item = :$item");
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
+		$stmt -> execute();
+		return $stmt -> fetch();
+
+		$stmt-> close();
+		$stmt = null;
+	}
 }
+
+
 
 	// if($item != null){
 	// 	$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");

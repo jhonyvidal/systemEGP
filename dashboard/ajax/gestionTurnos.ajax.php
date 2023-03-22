@@ -30,7 +30,8 @@ class AjaxTurnos{
 		$datos = array("idTurno" => $_POST["idTurno"],
     				   "horaI" => $_POST["horaI"],
     				   "horaF" => $_POST["horaF"],
-    				   "idActividad" => $_POST["idActividad"]
+    				   "idActividad" => $_POST["idActividad"],
+					   "idCausa" => $_POST["idCausa"]
     					);
 		$respuesta = ControladorGestionTurnos::ctrCrearParadaMaquinaUI($datos);
         echo json_encode($respuesta);
@@ -46,6 +47,17 @@ class AjaxTurnos{
         echo json_encode($respuesta);
 		
 	}
+
+	static public function ajaxMostrarCausas()
+	{
+
+		$item = "id_actividad";
+		$valor = $_POST["idActividadScreen"];
+		$respuesta = ControladorGestionTurnos::ctrMostrarCausas($item,$valor);
+        echo json_encode($respuesta);
+		
+	}
+	
 
 	static public function ajaxMostrarArticulos()
 	{
@@ -117,6 +129,42 @@ class AjaxTurnos{
 
 		echo json_encode($perdidas);
 	}
+
+	static public function ajaxMostrarProducto()
+	{
+		
+		$fechaInicial = null;
+		$fechaFin = null;
+		$type = 3;
+		$empresa = $_POST["idEmpresa"];
+
+		if(isset($_POST["fechaInicio"])){
+			$fechaInicial= $_POST["fechaInicio"];
+			$fechaFin = $_POST["fechaFin"];
+		}
+		
+		$perdidas = ControladorGestionTurnos::ctrMostrarVisorPerdidas($fechaInicial, $fechaFin, $type, null, $empresa);
+
+		echo json_encode($perdidas);
+	}
+
+	static public function ajaxMostrarRecurso()
+	{
+		
+		$fechaInicial = null;
+		$fechaFin = null;
+		$type = 4;
+		$empresa = $_POST["idEmpresa"];
+
+		if(isset($_POST["fechaInicio"])){
+			$fechaInicial= $_POST["fechaInicio"];
+			$fechaFin = $_POST["fechaFin"];
+		}
+		
+		$perdidas = ControladorGestionTurnos::ctrMostrarVisorPerdidas($fechaInicial, $fechaFin, $type, null, $empresa);
+
+		echo json_encode($perdidas);
+	}
 	
     
 	
@@ -146,9 +194,21 @@ if(isset($_POST["idTipoActividad"])){
     $categoria = new AjaxTurnos();
     $categoria -> ajaxMostrarTipoActividad();
 }
+if(isset($_POST["visorProducto"])){
+    $categoria = new AjaxTurnos();
+    $categoria -> ajaxMostrarProducto();
+}
+if(isset($_POST["visorRecurso"])){
+    $categoria = new AjaxTurnos();
+    $categoria -> ajaxMostrarRecurso();
+}
 if(isset($_POST["idTipoParadaScreen"])){
     $categoria = new AjaxTurnos();
     $categoria -> ajaxMostrarActividades();
+}
+if(isset($_POST["idActividadScreen"])){
+    $categoria = new AjaxTurnos();
+    $categoria -> ajaxMostrarCausas();
 }
 if(isset($_POST["idTipoRecursoScreen"])){
     $categoria = new AjaxTurnos();

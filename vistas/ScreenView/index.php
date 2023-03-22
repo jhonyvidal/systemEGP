@@ -173,7 +173,19 @@
 						</div>
 					</div>
 					<div class="col-4">
+						<label for="actividad">Causa</label>
+						<div class="input-group">
+							<select  class="form-select" name="causa" id="causa" require>
+								<option value="">Seleccionar Causa</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-4">
+					</div>
+					<div class="col-4">
 						<button detail="start" class="btnCreateStop">Adicionar Parada</button>
+					</div>
+					<div class="col-4">
 					</div>
 					
 				</div>

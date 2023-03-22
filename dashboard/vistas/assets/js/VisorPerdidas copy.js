@@ -69,23 +69,6 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
            consultaRecurso(2);
         }
   })
-  $("#CardDisponibilidad").click(function(){
-    $(".selectTipoParada").show();
-    consultaTipoParada();
-    consultaActividad();
-  })
-
-  $("#CardRendimiento").click(function(){
-    $(".selectTipoParada").hide();
-    consultaProducto();
-    consultaRecurso();
-  })
-
-  $("#VisorTipoParada").change(function(){
-    consultaActividad();
-  })
-  
-
 
   function consultaTipoParada(){
 
@@ -121,13 +104,12 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
                 array4.push(Math.round((Disponibilidad/100) * (Rendimiento/100) * (Calidad/100)* 100))
                 headers.push(ind.nombre)
             });
-            // Chart.getChart("visor").destroy(), Chart.getChart("visor2").destroy(),
-            // Chart.getChart("visor3").destroy(), Chart.getChart("visor4").destroy()
-            Chart.getChart("visor").destroy(),
-            CrearGraficaVisor("",'visor','Disponibilidad por Tipo',headers, array,'bar');
-            // CrearGraficaVisor("",'visor2','Rendimiento',headers, array2,'bar');
-            // CrearGraficaVisor("",'visor3','Calidad',headers, array3,'bar');
-            // CrearGraficaVisor("",'visor4','OEE',headers, array4,'bar');
+            Chart.getChart("visor").destroy(), Chart.getChart("visor2").destroy(),
+            Chart.getChart("visor3").destroy(), Chart.getChart("visor4").destroy()
+            CrearGraficaVisor("",'visor','Disponibilidad',headers, array,'bar');
+            CrearGraficaVisor("",'visor2','Rendimiento',headers, array2,'bar');
+            CrearGraficaVisor("",'visor3','Calidad',headers, array3,'bar');
+            CrearGraficaVisor("",'visor4','OEE',headers, array4,'bar');
             // CrearGraficaVisor("",'visorStep1','OEE',headers, array4,'pie');
 
 		},
@@ -172,13 +154,12 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
                 array4.push(Math.round((Disponibilidad/100) * (Rendimiento/100) * (Calidad/100)* 100))
                 headers.push(ind.descripcion)
             });
-            // Chart.getChart("visor").destroy(), Chart.getChart("visor2").destroy(),
-            // Chart.getChart("visor3").destroy(),Chart.getChart("visor4").destroy()
-            Chart.getChart("visor2").destroy()
-            // CrearGraficaVisor("",'visor','Disponibilidad',headers, array,'bar');
-            CrearGraficaVisor("",'visor2','Rendimiento por Producto',headers, array2,'bar');
-            // CrearGraficaVisor("",'visor3','Calidad',headers, array3,'bar');
-            // CrearGraficaVisor("",'visor4','OEE',headers, array4,'bar');
+            Chart.getChart("visor").destroy(), Chart.getChart("visor2").destroy(),
+            Chart.getChart("visor3").destroy(),Chart.getChart("visor4").destroy()
+            CrearGraficaVisor("",'visor','Disponibilidad',headers, array,'bar');
+            CrearGraficaVisor("",'visor2','Rendimiento',headers, array2,'bar');
+            CrearGraficaVisor("",'visor3','Calidad',headers, array3,'bar');
+            CrearGraficaVisor("",'visor4','OEE',headers, array4,'bar');
             // CrearGraficaVisor("",'visorStep1','OEE',headers, array4,'pie');
 
 		},
@@ -228,13 +209,12 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
                 }
                
             });
-            // Chart.getChart("visor").destroy(), Chart.getChart("visor2").destroy(),
-            // Chart.getChart("visor3").destroy(),Chart.getChart("visor4").destroy()
-            Chart.getChart("visor").destroy()
-            CrearGraficaVisor("",'visor','Rendimiento por Recurso',headers, array2,'bar');
-            // CrearGraficaVisor("",'visor2','Rendimiento',headers, array2,'bar');
-            // CrearGraficaVisor("",'visor3','Calidad',headers, array3,'bar');
-            // CrearGraficaVisor("",'visor4','OEE',headers, array4,'bar');
+            Chart.getChart("visor").destroy(), Chart.getChart("visor2").destroy(),
+            Chart.getChart("visor3").destroy(),Chart.getChart("visor4").destroy()
+            CrearGraficaVisor("",'visor','Disponibilidad',headers, array,'bar');
+            CrearGraficaVisor("",'visor2','Rendimiento',headers, array2,'bar');
+            CrearGraficaVisor("",'visor3','Calidad',headers, array3,'bar');
+            CrearGraficaVisor("",'visor4','OEE',headers, array4,'bar');
             // CrearGraficaVisor("",'visorStep1','OEE',headers, array4,'pie');
 
 		},
@@ -286,13 +266,12 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
                 array4.push(Math.round((Disponibilidad/100) * (Rendimiento/100) * (Calidad/100)* 100))
                 headers.push(ind.descripcion)
             });
-            // Chart.getChart("visor").destroy(), Chart.getChart("visor2").destroy(),
-            // Chart.getChart("visor3").destroy(),Chart.getChart("visor4").destroy()
-            Chart.getChart("visor2").destroy(),
-            CrearGraficaVisor("",'visor2','Disponibilidad por Actividad',headers, array,'bar');
-            // CrearGraficaVisor("",'visor2','Rendimiento',headers, array2,'bar');
-            // CrearGraficaVisor("",'visor3','Calidad',headers, array3,'bar');
-            // CrearGraficaVisor("",'visor4','OEE',headers, array4 ,'bar');
+            Chart.getChart("visor").destroy(), Chart.getChart("visor2").destroy(),
+            Chart.getChart("visor3").destroy(),Chart.getChart("visor4").destroy()
+            CrearGraficaVisor("",'visor','Disponibilidad',headers, array,'bar');
+            CrearGraficaVisor("",'visor2','Rendimiento',headers, array2,'bar');
+            CrearGraficaVisor("",'visor3','Calidad',headers, array3,'bar');
+            CrearGraficaVisor("",'visor4','OEE',headers, array4 ,'bar');
             // CrearGraficaVisor("",'visorStep1','OEE',headers, array4,'pie');
 
        },
@@ -381,11 +360,6 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
             array4.forEach(function(ind) {
                 TotalOEE = parseFloat(TotalOEE) + parseFloat(ind)
             });
-            $("#textOEE").html(TotalOEE +"%");
-            $("#textDisponibilidad").html(TotalDis.toFixed(2)+"%");
-            $("#textRendimiento").html(TotalRen+"%");
-            $("#textCalidad").html(TotalCal+"%");
-
             headerTotal=['OEE Total'];
             TotalOeeArray=[TotalOEE]
 

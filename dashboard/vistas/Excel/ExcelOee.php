@@ -17,10 +17,10 @@ require_once '../../modelos/general.modelo.php';
 
         $report=[];
 
-        array_push($report, [ 'Id','Fecha','Hora Inicio','Hora Fin','Buenos','Malos',
-            'Maquina',
+        array_push($report, ['Id','Fecha','Hora Inicio','Hora Fin','Buenos','Malos',
+            'Proceso','Recurso','Maquina',
             'UnidadesEsperadas', 'HorasProgramadas','Horas Paradas', 'Disponibilidad',  'Rendimiento', 'Calidad', 'Oee',
-            'Parada','Actividad', 'Hora Inicio Parada' , 'Hora Fin Parada']);
+            'Parada','Actividad','Causa', 'Hora Inicio Parada' , 'Hora Fin Parada']);
 
         foreach ($turnos as $key => $value){
     
@@ -32,7 +32,7 @@ require_once '../../modelos/general.modelo.php';
             $valor = $value["id"];
             $total = ControladorGestionTurnos::ctrTotalParadasTurno($item, $valor);
             $paradas = ControladorGestionTurnos::ctrMostrarParadasTurnoActual($item, $valor);
-            $arrayParadas=''; $arrayActividad='';  $arrayTiempoParada='';
+            // $arrayParadas=''; $arrayActividad='';  $arrayTiempoParada='';
 
             $disponibilidad = round((1- (($total["Total"] / 60) / $horasProgramadas)) * 100,1); 
             $rendimiento = round((($value["pBuenos"] + $value["pMalos"]) / $unidadesEsperadas) * 100,2);
@@ -42,19 +42,18 @@ require_once '../../modelos/general.modelo.php';
                     $value["pMalos"] !== 0 ? 1-($value["pMalos"] / ($value["pBuenos"] + $value["pMalos"])): 100)) * 100,2);
             // $oee = ((1440 - $total["Total"]) * 100) / 1440;
 
-            
-            foreach ($paradas as $key => $value2){
-                $arrayParadas = $arrayParadas . strval($key + 1)." " . $value2['nombreParada'] ." ";
-                $arrayActividad = $arrayActividad . strval($key + 1)." " . $value2['de'] ." ";
-                $arrayTiempoParada = $arrayTiempoParada . strval($key + 1)." " . $value2['horaInicioP'] ." - ". $value2['horaFinP'] ." ";
-            }
+            // foreach ($paradas as $key => $value2){
+            //     $arrayParadas = $arrayParadas . strval($key + 1)." " . $value2['nombreParada'] ." ";
+            //     $arrayActividad = $arrayActividad . strval($key + 1)." " . $value2['de'] ." ";
+            //     $arrayTiempoParada = $arrayTiempoParada . strval($key + 1)." " . $value2['horaInicioP'] ." - ". $value2['horaFinP'] ." ";
+            // }
             $count = count($paradas) == 0 ? 1 : count($paradas);
 
             for($i=0;$i < $count;$i++){
                 array_push($report, [ $value['id'], $value['fechaR'],$value['horaInicio'], $value['horaFin'], $value['pBuenos'],$value['pMalos'],
-                $producto['descripcion'],
+                $producto['proceso'],$producto['recurso'],$producto['nombre'],
                 $unidadesEsperadas, $horasProgramadas, round($total["Total"]/60,2), $disponibilidad,  $rendimiento, $calidad, $newOee,
-                count($paradas) !== 0 ? $paradas[$i]['nombreParada'] : '',    count($paradas) !== 0  ? $paradas[$i]['de'] : '' , 
+                count($paradas) !== 0 ? $paradas[$i]['nombreParada'] : '',    count($paradas) !== 0  ? $paradas[$i]['de'] : '' , count($paradas) !== 0  ? $paradas[$i]['nombreCausa'] : '',
                 count($paradas) !== 0 ? $paradas[$i]['horaInicioP'] :'',
                 count($paradas) !== 0 ? $paradas[$i]['horaFinP'] :'']);
             }

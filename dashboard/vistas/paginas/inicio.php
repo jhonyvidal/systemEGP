@@ -88,7 +88,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h3>Crear Link Producción</h3>
-                            <a href="http://localhost/EGP/EGPV2/vistas/ScreenView/index.php?empresa=<?php echo $empresa["id"] ?>&idU=<?php echo $_SESSION["idU"]?>">
+                            <a target="_blank" href="http://localhost/EGP/EGPV2/vistas/ScreenView/index.php?empresa=<?php echo $empresa["id"] ?>&idU=<?php echo $_SESSION["idU"]?>">
                                 <input type="button" id="link" class="btn btn-primary btn-block btn-lg shadow-lg mt-3 auth-colorBtn" value="Crear Link">
                             </a>
                         </div>

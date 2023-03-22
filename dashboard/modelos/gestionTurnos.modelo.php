@@ -166,6 +166,41 @@ static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabl
 		$stmt -> execute();
 		return $stmt -> fetchAll();
 	
+	}else if($fechaInicial !== null && $type == 3){
+
+		$stmt = Conexion::conectar()->prepare("SELECT B.id, B.descripcion, COUNT(B.id) AS cantidad, 
+												SUM(TIMESTAMPDIFF(MINUTE,A.horaInicioP,A.horaFinP)) as total, 
+												SUM(C.PBuenos) as buenos, SUM(C.PMalos) as malos 
+												FROM `paradasmaquina` A 
+												INNER JOIN turno C ON A.idturno = C.id 
+												INNER JOIN producto B ON C.idProducto = B.id 
+												INNER JOIN usuarios D ON C.idUsuario = D.id 
+												WHERE A.fechaR BETWEEN :fechaInicial AND :fechaFinal AND D.idEmpresa = $empresa 
+												GROUP BY B.descripcion 
+												ORDER BY total DESC;");
+
+		$stmt->bindParam(":fechaInicial", $fechaInicial, PDO::PARAM_STR);
+		$stmt->bindParam(":fechaFinal", $fechaFinal, PDO::PARAM_STR);
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+	
+	}else if($fechaInicial !== null && $type == 4){
+
+		$stmt = Conexion::conectar()->prepare("SELECT E.id, E.descripcion, E.proceso, COUNT(E.id) AS cantidad, SUM(TIMESTAMPDIFF(MINUTE,A.horaInicioP,A.horaFinP)) as total, 
+												SUM(C.PBuenos) as buenos, SUM(C.PMalos) as malos FROM `paradasmaquina` A 
+												INNER JOIN turno C ON A.idturno = C.id 
+												INNER JOIN producto B ON C.idProducto = B.id
+												INNER JOIN recurso E ON B.id_recurso = E.id 
+												INNER JOIN usuarios D ON C.idUsuario = D.id 
+												WHERE A.fechaR BETWEEN :fechaInicial AND :fechaFinal AND E.idEmpresa = $empresa 
+												GROUP BY E.descripcion 
+												ORDER BY total DESC;");
+
+		$stmt->bindParam(":fechaInicial", $fechaInicial, PDO::PARAM_STR);
+		$stmt->bindParam(":fechaFinal", $fechaFinal, PDO::PARAM_STR);
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+	
 	}else{
 		$stmt = Conexion::conectar()->prepare("SELECT C.id, C.nombre, COUNT(C.id) AS cantidad, 
 												SUM(TIMESTAMPDIFF(MINUTE,A.horaInicioP,A.horaFinP)) as total,
@@ -190,10 +225,12 @@ static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabl
 	Mostrar empresa /y mostrar maquinas
 ==============================================*/
 	static public function mdlMostrarDpto($tabla, $item, $valor){
-			$stmt = Conexion::conectar()->prepare("SELECT *,a.idActividad,b.codigo,b.id_tipoparada,b.descripcion AS de, c.descripcion AS nombreParada
+			$stmt = Conexion::conectar()->prepare("SELECT *,a.idActividad,b.id,b.id_tipoparada,b.descripcion AS de,
+													 c.descripcion AS nombreParada, d.descripcion AS nombreCausa
 												   FROM $tabla a 
-												   INNER JOIN actividad b ON a.idActividad=b.codigo
+												   INNER JOIN actividad b ON a.idActividad=b.id
 												   INNER JOIN tipoparada c ON b.id_tipoparada=c.id
+												   INNER JOIN causa d ON  a.idCausa = d.id
 												   WHERE $item = :$item  ");
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 			$stmt -> execute();
@@ -323,11 +360,13 @@ static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabl
 	static public function mdlCrearParadaMaquinaUI($tabla, $datos){
 
 		$request = Conexion::conectar();
-		$stmt = $request->prepare("INSERT INTO $tabla(`horaInicioP`, `horaFinP`, `idActividad`, `idTurno`) VALUES (:horaI, :horaF, :idActividad, :idTurno)");
+		$stmt = $request->prepare("INSERT INTO $tabla(`horaInicioP`, `horaFinP`, `idActividad`, `idTurno`, `idCausa`) 
+									VALUES (:horaI, :horaF, :idActividad, :idTurno,:idCausa)");
 		$stmt->bindParam(":idTurno", $datos["idTurno"], PDO::PARAM_STR);
 		$stmt->bindParam(":horaI", $datos["horaI"], PDO::PARAM_STR);
 		$stmt->bindParam(":horaF", $datos["horaF"], PDO::PARAM_STR);
 		$stmt->bindParam(":idActividad", $datos["idActividad"], PDO::PARAM_STR);
+		$stmt->bindParam(":idCausa", $datos["idCausa"], PDO::PARAM_INT);
 
 		if($stmt->execute()){
 			return  $request->lastInsertId("id");

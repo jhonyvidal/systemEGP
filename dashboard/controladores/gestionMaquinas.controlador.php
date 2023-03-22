@@ -79,7 +79,7 @@ static public function ctrMostrarProductoId($valor)
 	$estado = null;
 	$item = "id";
 	$tabla = "producto";
-	$respuesta = ModeloGeneral::mdlMostrarDatos($op, $item, $valor, $estado, $tabla);
+	$respuesta = ModeloGeneral::mdlMostrarProducto($op, $item, $valor, $estado, $tabla);
 	return $respuesta;
 }
 /*--=====================================
