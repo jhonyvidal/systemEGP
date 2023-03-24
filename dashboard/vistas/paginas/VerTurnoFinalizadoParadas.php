@@ -121,7 +121,7 @@ $turnos = ControladorGestionTurnos::ctrMostrarTurnosFinalizados($op, $item, $val
                 <td class="col-auto">
                     <p class="mb-0"><?php 
                     $item = "id"; 
-                    $valor = $values["idTipoParada"];
+                    $valor = $values["id_tipoparada"];
                     $tP = ControladorGestionTurnos::ctrMostrarTipoParadaTurno($item, $valor);
                     echo $tP["nombre"]; 
                     ?></p>

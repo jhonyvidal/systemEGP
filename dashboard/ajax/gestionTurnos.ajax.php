@@ -13,7 +13,7 @@ class AjaxTurnos{
 		
 		$datos = array("idU" => $_POST["idU"],
     				   "horaInicio" => $_POST["horaInicioUI"],
-    				   "horaFin" => $_POST["horaInicioUI"],
+    				   "horaFin" => $_POST["horaFinUI"],
     				   "idDpto" => $_POST["idDpto"],
 					   "idProducto"=> $_POST["idProducto"],
     				   "estado" => 1

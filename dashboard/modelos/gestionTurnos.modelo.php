@@ -295,10 +295,10 @@ static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabl
 	==============================================*/
 	static public function mdlActualizarTurnoUI($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET pBuenos = :pBuenos,pMalos=:pMalos,horaFin=:horaFin  WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET pBuenos = :pBuenos,pMalos=:pMalos,estado=0  WHERE id = :id");
 		$stmt->bindParam(":pBuenos", $datos["pBuenos"], PDO::PARAM_STR);
 		$stmt->bindParam(":pMalos", $datos["pMalos"], PDO::PARAM_STR);
-		$stmt->bindParam(":horaFin", $datos["horaFin"], PDO::PARAM_STR);
+		// $stmt->bindParam(":horaFin", $datos["horaFin"], PDO::PARAM_STR);
 		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
 
 		if($stmt->execute()){

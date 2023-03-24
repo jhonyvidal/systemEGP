@@ -95,7 +95,7 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
     var datos = new FormData();
 	  datos.append("idTipoParada", "");
     datos.append("idEmpresa",$("#idEmpresa").val());
-    datos.append("fechaInicio",$("#fechaInicio").val() );
+    datos.append("fechaInicio",$("#fechaInicio").val());
     datos.append("fechaFin", $("#fechaFin").val());
 
     $.ajax({
@@ -111,6 +111,7 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
             console.log(res);
             array= [], array2=[], array3=[], array4=[]
             headers=[]
+            TotalDis=0,TotalRen=0,TotalCal=0,Total=0,
             res.forEach(function(ind) {
                 var Disponibilidad = Math.round((1- ((parseInt(ind.total) / 60) / horasProgramadas)) * 100,1);
                 var Rendimiento = Math.round(((parseInt(ind.buenos) + parseInt(ind.malos)) / unidadesEsperadas) * 100,2)
@@ -120,7 +121,16 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
                 array3.push(Calidad)
                 array4.push(Math.round((Disponibilidad/100) * (Rendimiento/100) * (Calidad/100)* 100))
                 headers.push(ind.nombre)
+                TotalDis = parseFloat(TotalDis)+  parseFloat(Disponibilidad);
+                TotalRen = parseFloat(TotalRen) + parseFloat(Rendimiento);
+                TotalCal = parseFloat(TotalCal)  +  parseFloat(Calidad);
+                Total = parseFloat(Total) + ((TotalDis * TotalRen *  TotalCal)/3);
             });
+            console.log(Total.toFixed(2))
+            $("#textOEE").html(Total.toFixed(2) +"%");
+            $("#textDisponibilidad").html(TotalDis.toFixed(2)+"%");
+            $("#textRendimiento").html(TotalRen+"%");
+            $("#textCalidad").html(TotalCal+"%");
             // Chart.getChart("visor").destroy(), Chart.getChart("visor2").destroy(),
             // Chart.getChart("visor3").destroy(), Chart.getChart("visor4").destroy()
             Chart.getChart("visor").destroy(),
@@ -332,6 +342,7 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
   })
 
   $("#fechaFin").change(function(){
+    consultaTipoParada();
     if($("#fechaInicio").val() !== "" && $("#fechaFin").val() !== ""){
       $('#btnConsultar').prop('disabled', false);
     }else{
@@ -362,7 +373,7 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
             console.log (res);
             array= [], array2=[], array3=[], array4=[], arrayTotal=[]
             headers=[]
-            TotalDis=0,TotalRen=0,TotalCal=0,
+            TotalDis=0,TotalRen=0,TotalCal=0,Total=0,
             res.forEach(function(ind) {
                 var Disponibilidad = (1- ((parseFloat(ind.total) / 60) / horasProgramadas)).toFixed(2);
                 var Rendimiento = ((parseFloat(ind.buenos) + parseFloat(ind.malos)) / unidadesEsperadas).toFixed(2)
@@ -370,18 +381,15 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
                 array.push(Disponibilidad)
                 array2.push(Rendimiento)
                 array3.push(Calidad)
-                array4.push((Disponibilidad * Rendimiento * Calidad * 100).toFixed(2))
+                array4.push((Disponibilidad * Rendimiento * Calidad).toFixed(2))
                 headers.push(ind.nombre)
                 TotalDis = parseFloat(TotalDis)+  parseFloat(Disponibilidad);
                 TotalRen = parseFloat(TotalRen) + parseFloat(Rendimiento);
                 TotalCal = parseFloat(TotalCal)  +  parseFloat(Calidad);
+                Total = parseFloat(Total) + ((TotalDis * TotalRen *  TotalCal)/3);
             });
-            
             TotalOEE=0;
-            array4.forEach(function(ind) {
-                TotalOEE = parseFloat(TotalOEE) + parseFloat(ind)
-            });
-            $("#textOEE").html(TotalOEE +"%");
+            $("#textOEE").html(Total.toFixed(2) +"%");
             $("#textDisponibilidad").html(TotalDis.toFixed(2)+"%");
             $("#textRendimiento").html(TotalRen+"%");
             $("#textCalidad").html(TotalCal+"%");

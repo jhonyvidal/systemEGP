@@ -50,8 +50,23 @@
 				<?php echo $request["email"]; ?>
 				</span>
 			</div>
-			<h6>Contador de paradas</h6>
-			<h2>Inicio de turno</h2>
+			
+			<h6 style="color: black !important;">Contador de paradas</h6>
+			<h2 style="color: black !important;">Inicio de turno</h2>
+			<div class="row">
+				<div class="col-3">
+					<label for="HoraInicioTurno">Hora Inicio Turno</label>
+					<div class="input-group">
+						<input  type="time" style="margin-left:0px;" class="form-control" name="HoraInicioTurno" id="HoraInicioTurno" required>
+					</div>
+				</div>
+				<div class="col-3">
+					<label for="HoraInicioTurno">Hora Fin Turno</label>
+					<div class="input-group">
+						<input  type="time" style="margin-left:0px;" class="form-control" name="HoraFinTurno" id="HoraFinTurno" required>
+					</div>
+				</div>
+			</div>
 			<div class="row">
 				<div class="col-4">
 					<label for="Recurso">Recurso</label>
@@ -99,7 +114,7 @@
 									$categorias = ControladorGestionTurnos::ctrMostrarArticulos($item,$valor);
 
 									foreach ($categorias as $key => $value) {
-										echo '<option value="'.$value["id"].'" unidad="'.$value["unidad"].'" velocidad="'.$value["velocidad"].'"  >'.$value["descripcion"].'</option>';
+										echo '<option value="'.$value["id"].'" unidad="'.$value["unidad"].'"  descripcion="'.$value["descripcion"].'"  velocidad="'.$value["velocidad"].'">'.$value["descripcion"].'</option>';
 									}
 
 								?>
@@ -137,8 +152,8 @@
 				<?php echo $request["email"]; ?>
 				</span>
 			</div>
-			<h6>Contador de paradas</h6>
-			<h2>Paradas de maquina</h2>
+			<h6 style="color: black !important;">Contador de paradas</h6>
+			<h2 style="color: black !important;" id="tituloParadas">Paradas de maquina</h2>
 			<div id="start"  style="margin-top: 50px; text-align: center;">
 				<input type="hidden" id="turno"></input>
 				<input type="hidden" id="idParada"></input>
@@ -214,7 +229,7 @@
 				</div>	
 				
 			</div>
-			<button  class="btn floating-btn">Finalizar Turno</button>
+			<button  class="btn floating-btn" id="floating-btn">Finalizar Turno</button>
 		</div>
 	</div>
 </div>

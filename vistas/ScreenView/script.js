@@ -1,4 +1,4 @@
-const floating_btn = document.querySelector('.floating-btn');
+const floating_btn = document.querySelector('#floating-btn');
 const close_btn = document.querySelector('.close-btn');
 const social_panel_container = document.querySelector('.social-panel-container');
 
@@ -43,7 +43,8 @@ $(document).ready(function(){
 		horaInicio = h+":"+m+":"+s;
 		
 		var datos = new FormData();
-		datos.append("horaInicioUI", horaInicio);
+		datos.append("horaInicioUI", $('#HoraInicioTurno').val());
+		datos.append("horaFinUI", $('#HoraFinTurno').val());
 		datos.append("idU", $("#idU").val());
 		datos.append("idDpto", 4);
 		datos.append("idProducto", $("#Artículo").val());
@@ -225,6 +226,7 @@ $(document).ready(function(){
 		 RECURSOS SELECT CHANGES 
 	=============================================*/
 	$("#Recurso").change(function(){
+		$("#tituloParadas").html($(this).children("option:selected").attr("descripcion"))
 		$("#Descripción").val($(this).children("option:selected").attr("descripcion"))
 		$("#Proceso").val($(this).children("option:selected").attr("proceso"))
 	});
@@ -233,6 +235,7 @@ $(document).ready(function(){
 		 ARTICULOS SELECT CHANGES 
 	=============================================*/
 	$("#Artículo").change(function(){
+		$("#tituloParadas").html($("#tituloParadas").html() + ' - '+ $(this).children("option:selected").html())
 		$("#Unidad").val($(this).children("option:selected").attr("unidad"))
 		$("#Rendimiento").val($(this).children("option:selected").attr("velocidad"))
 	});
@@ -398,8 +401,10 @@ $(document).ready(function(){
     	VALIDATIONS
     =============================================*/
 	function validationStartMachine(){
-		if($("#Recurso").val() === ""){ return false;}  
-		if($("#Artículo").val() === ""){ return false;}  
+		if($("#Recurso").val() === ""){ alert("Seleccionar recurso"); return false;}  
+		if($("#Artículo").val() === ""){ alert("Seleccionar Articulo"); return false;} 
+		if($("#HoraInicioTurno").val() === ""){alert("Seleccionar Hora Inicio");  return false;} 
+		if($("#HoraFinTurno").val() === ""){ alert("Seleccionar Hora Fin");return false;}    
 		return true;
 	}
 
