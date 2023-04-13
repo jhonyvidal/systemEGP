@@ -59,17 +59,25 @@ static public function mdlRegistroIngresoUsuarios($idU, $navU, $ipU)
 
 	static public function mdlMostrarUsuarios($tabla, $item, $valor){
 		if($item == 'idEmpresa' && $valor != null){
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			$stmt = Conexion::conectar()->prepare("SELECT A.id,A.rol,A.email,A.nombre,A.password,A.foto,A.estado,A.idEmpresa,A.usuarioLink,
+												B.nombre AS empresa FROM $tabla A
+												INNER JOIN empresa B ON A.idEmpresa=B.id
+												WHERE A.$item = :$item");
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 			$stmt -> execute();
 			return $stmt -> fetchAll();
 		}else if($item != null && $valor != null){
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			$stmt = Conexion::conectar()->prepare("SELECT A.id,A.rol,A.email,A.nombre,A.password,A.foto,A.estado,A.idEmpresa,A.usuarioLink,
+											    B.nombre AS empresa FROM $tabla A
+												INNER JOIN empresa B ON A.idEmpresa=B.id
+												WHERE A.$item = :$item");
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 			$stmt -> execute();
 			return $stmt -> fetch();
 		}else{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT A.id,A.rol,A.email,A.nombre,A.password,A.foto,A.estado,A.idEmpresa,A.usuarioLink,
+												B.nombre AS empresa FROM $tabla A
+												INNER JOIN empresa B ON A.idEmpresa=B.id");
 			$stmt -> execute();
 			return $stmt -> fetchAll();
 		}

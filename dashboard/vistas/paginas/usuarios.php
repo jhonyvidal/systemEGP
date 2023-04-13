@@ -57,6 +57,7 @@ if($_SESSION["rol"] != "admin"){
                 <tr>
                   <th>#</th>
                   <th>Foto</th>
+                  <th>Empresa</th>
                   <th>Nombre</th>
                   <th>e-Mail</th>
                   <th>Rol</th>
@@ -71,6 +72,7 @@ if($_SESSION["rol"] != "admin"){
                  <tr>
                   <td><?php echo($key+1); ?></td>
                   <td><img src="<?php echo $value["foto"]?>" class="img-fluid avatar avatar-xl me-3" width="30px"></td>
+                  <td><?php echo $value["empresa"]?></td> 
                   <td><?php echo $value["nombre"]?></td> 
                   <td><?php echo $value["email"]?></td>
                   <td><?php echo $value["rol"]?></td>
