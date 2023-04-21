@@ -84,7 +84,7 @@ static public function mdlContarRegistros($tabla)
 		$stmt = Conexion::conectar()->prepare("SELECT *,A.descripcion AS nombre, B.descripcion AS recurso, B.proceso FROM $tabla A
 											INNER JOIN recurso B ON A.id_recurso = B.id
 											WHERE A.$item = :$item");
-		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_INT);
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 		$stmt -> execute();
 		return $stmt -> fetch();
 

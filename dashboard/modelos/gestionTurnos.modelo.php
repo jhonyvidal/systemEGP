@@ -118,10 +118,11 @@ static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabl
 
 		$stmt = Conexion::conectar()->prepare("SELECT B.id_tipoparada as id, B.descripcion, COUNT(B.id) AS cantidad, 
 												SUM(TIMESTAMPDIFF(MINUTE,A.horaInicioP,A.horaFinP)) as total,
-												SUM(C.PBuenos) as buenos, SUM(C.PMalos) as malos
+												SUM(C.PBuenos) as buenos, SUM(C.PMalos) as malos, F.velocidad
 												FROM `paradasmaquina` A 
 												INNER JOIN actividad B ON B.id = A.idActividad 
 												INNER JOIN turno C ON A.idturno = C.id
+												INNER JOIN producto F ON F.id = C.idProducto
 												INNER JOIN usuarios D ON C.idUsuario = D.id 
 												WHERE A.fechaR BETWEEN :fechaInicial AND :fechaFinal AND D.idEmpresa = $empresa 
 												AND B.id_tipoparada = :tipoParada
@@ -136,10 +137,11 @@ static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabl
 	}else if($type == 2){
 		$stmt = Conexion::conectar()->prepare("SELECT B.id_tipoparada as id, B.descripcion, COUNT(B.id) AS cantidad, 
 											SUM(TIMESTAMPDIFF(MINUTE,A.horaInicioP,A.horaFinP)) as total,
-											SUM(C.PBuenos) as buenos, SUM(C.PMalos) as malos
+											SUM(C.PBuenos) as buenos, SUM(C.PMalos) as malos, F.velocidad
 											FROM `paradasmaquina` A 
 											INNER JOIN actividad B ON B.id = A.idActividad 
 											INNER JOIN turno C ON A.idturno = C.id
+											INNER JOIN producto F ON F.id = C.idProducto
 											INNER JOIN usuarios D ON C.idUsuario = D.id 
 											WHERE B.id_tipoparada = :tipoParada AND D.idEmpresa = $empresa
 											GROUP BY B.descripcion
@@ -151,13 +153,14 @@ static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabl
 
 		$stmt = Conexion::conectar()->prepare("SELECT C.id, C.nombre, COUNT(C.id) AS cantidad, 
 												SUM(TIMESTAMPDIFF(MINUTE,A.horaInicioP,A.horaFinP)) as total,
-												SUM(D.PBuenos) as buenos, SUM(D.PMalos) as malos
+												SUM(D.PBuenos) as buenos, SUM(D.PMalos) as malos, F.velocidad
 												FROM `paradasmaquina` A 
 												INNER JOIN actividad B ON B.id = A.idActividad 
 												INNER JOIN tipoparada C ON B.id_tipoparada = C.id 
 												INNER JOIN turno D ON A.idturno = D.id
+												INNER JOIN producto F ON F.id = D.idProducto
 												INNER JOIN usuarios E ON D.idUsuario = E.id 
-												WHERE A.fechaR BETWEEN :fechaInicial AND :fechaFinal AND E.idEmpresa = $empresa 
+												WHERE A.fechaR BETWEEN :fechaInicial AND :fechaFinal AND E.idEmpresa = $empresa
 												GROUP BY C.id
 												ORDER BY total DESC");
 
@@ -170,7 +173,7 @@ static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabl
 
 		$stmt = Conexion::conectar()->prepare("SELECT B.id, B.descripcion, COUNT(B.id) AS cantidad, 
 												SUM(TIMESTAMPDIFF(MINUTE,A.horaInicioP,A.horaFinP)) as total, 
-												SUM(C.PBuenos) as buenos, SUM(C.PMalos) as malos 
+												SUM(C.PBuenos) as buenos, SUM(C.PMalos) as malos , B.velocidad
 												FROM `paradasmaquina` A 
 												INNER JOIN turno C ON A.idturno = C.id 
 												INNER JOIN producto B ON C.idProducto = B.id 
@@ -187,7 +190,8 @@ static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabl
 	}else if($fechaInicial !== null && $type == 4){
 
 		$stmt = Conexion::conectar()->prepare("SELECT E.id, E.descripcion, E.proceso, COUNT(E.id) AS cantidad, SUM(TIMESTAMPDIFF(MINUTE,A.horaInicioP,A.horaFinP)) as total, 
-												SUM(C.PBuenos) as buenos, SUM(C.PMalos) as malos FROM `paradasmaquina` A 
+												SUM(C.PBuenos) as buenos, SUM(C.PMalos) as malos , B.velocidad
+												FROM `paradasmaquina` A 
 												INNER JOIN turno C ON A.idturno = C.id 
 												INNER JOIN producto B ON C.idProducto = B.id
 												INNER JOIN recurso E ON B.id_recurso = E.id 
@@ -204,11 +208,12 @@ static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabl
 	}else{
 		$stmt = Conexion::conectar()->prepare("SELECT C.id, C.nombre, COUNT(C.id) AS cantidad, 
 												SUM(TIMESTAMPDIFF(MINUTE,A.horaInicioP,A.horaFinP)) as total,
-												SUM(D.PBuenos) as buenos, SUM(D.PMalos) as malos
+												SUM(D.PBuenos) as buenos, SUM(D.PMalos) as malos, F.velocidad
 												FROM `paradasmaquina` A 
 												INNER JOIN actividad B ON B.id = A.idActividad 
 												INNER JOIN tipoparada C ON B.id_tipoparada = C.id 
 												INNER JOIN turno D ON A.idturno = D.id
+												INNER JOIN producto F ON F.id = D.idProducto
 												INNER JOIN usuarios E ON D.idUsuario = E.id 
 												WHERE E.idEmpresa = $empresa
 												GROUP BY C.id
@@ -230,7 +235,7 @@ static public function mdlVisorPerdidas($fechaInicial, $fechaFinal, $type, $tabl
 												   FROM $tabla a 
 												   INNER JOIN actividad b ON a.idActividad=b.id
 												   INNER JOIN tipoparada c ON b.id_tipoparada=c.id
-												   INNER JOIN causa d ON  a.idCausa = d.id
+												   LEFT JOIN causa d ON  a.idCausa = d.id
 												   WHERE $item = :$item  ");
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 			$stmt -> execute();

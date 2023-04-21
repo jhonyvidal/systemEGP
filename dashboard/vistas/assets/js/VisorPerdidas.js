@@ -85,8 +85,6 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
     consultaActividad();
   })
   
-
-
   function consultaTipoParada(){
 
     const horasProgramadas = 24;
@@ -114,7 +112,7 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
             TotalDis=0,TotalRen=0,TotalCal=0,Total=0,
             res.forEach(function(ind) {
                 var Disponibilidad = (1- ((parseFloat(ind.total) / 60) / horasProgramadas)).toFixed(2);
-                var Rendimiento = ((parseFloat(ind.buenos) + parseFloat(ind.malos)) / unidadesEsperadas).toFixed(2)
+                var Rendimiento = ((parseFloat(ind.buenos) + parseFloat(ind.malos)) / parseFloat(ind.velocidad)).toFixed(2)
                 var Calidad = (parseFloat(ind.malos) !== 0 ? (1-(parseFloat(ind.malos) / (parseFloat(ind.buenos) + parseFloat(ind.malos))))  : 100).toFixed(2)
                 array.push(Disponibilidad)
                 array2.push(Rendimiento)
@@ -124,13 +122,16 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
                 TotalDis = parseFloat(TotalDis)+  parseFloat(Disponibilidad);
                 TotalRen = parseFloat(TotalRen) + parseFloat(Rendimiento);
                 TotalCal = parseFloat(TotalCal)  +  parseFloat(Calidad);
-                Total = parseFloat(Total) + ((TotalDis * TotalRen *  TotalCal));
             });
-            console.log(Total.toFixed(2))
-            $("#textOEE").html(Total.toFixed(2) +"%");
-            $("#textDisponibilidad").html(TotalDis.toFixed(2)+"%");
-            $("#textRendimiento").html(TotalRen+"%");
-            $("#textCalidad").html(TotalCal+"%");
+            const dis = (TotalDis/res.length).toFixed(2);
+            const ren = (TotalRen/res.length).toFixed(2)
+            const cal = (TotalCal/res.length).toFixed(2)
+            Total = (dis * ren *  cal) * 100;
+
+            $("#textOEE").html((Total).toFixed(2)+"%");
+            $("#textDisponibilidad").html(dis+"%");
+            $("#textRendimiento").html(ren+"%");
+            $("#textCalidad").html(cal+"%");
             // Chart.getChart("visor").destroy(), Chart.getChart("visor2").destroy(),
             // Chart.getChart("visor3").destroy(), Chart.getChart("visor4").destroy()
             Chart.getChart("visor").destroy(),
@@ -376,7 +377,7 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
             TotalDis=0,TotalRen=0,TotalCal=0,Total=0,
             res.forEach(function(ind) {
                 var Disponibilidad = (1- ((parseFloat(ind.total) / 60) / horasProgramadas)).toFixed(2);
-                var Rendimiento = ((parseFloat(ind.buenos) + parseFloat(ind.malos)) / unidadesEsperadas).toFixed(2)
+                var Rendimiento = ((parseFloat(ind.buenos) + parseFloat(ind.malos)) / parseFloat(ind.velocidad)).toFixed(2)
                 var Calidad = (parseFloat(ind.malos) !== 0 ? (1-(parseFloat(ind.malos) / (parseFloat(ind.buenos) + parseFloat(ind.malos))))  : 100).toFixed(2)
                 array.push(Disponibilidad)
                 array2.push(Rendimiento)
@@ -386,13 +387,17 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
                 TotalDis = parseFloat(TotalDis)+  parseFloat(Disponibilidad);
                 TotalRen = parseFloat(TotalRen) + parseFloat(Rendimiento);
                 TotalCal = parseFloat(TotalCal)  +  parseFloat(Calidad);
-                Total = parseFloat(Total) + ((TotalDis * TotalRen *  TotalCal));
             });
             TotalOEE=0;
-            $("#textOEE").html(Total.toFixed(2) +"%");
-            $("#textDisponibilidad").html(TotalDis.toFixed(2)+"%");
-            $("#textRendimiento").html(TotalRen+"%");
-            $("#textCalidad").html(TotalCal+"%");
+            const dis = (TotalDis/res.length).toFixed(2);
+            const ren = (TotalRen/res.length).toFixed(2)
+            const cal = (TotalCal/res.length).toFixed(2)
+            Total = (dis * ren *  cal) * 100;
+
+            $("#textOEE").html((Total).toFixed(2)+"%");
+            $("#textDisponibilidad").html(dis+"%");
+            $("#textRendimiento").html(ren+"%");
+            $("#textCalidad").html(cal+"%");
 
             headerTotal=['OEE Total'];
             TotalOeeArray=[TotalOEE]

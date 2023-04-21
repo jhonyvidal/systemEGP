@@ -32,7 +32,7 @@
                         <button class="btn btn-primary btn-block btn-lg shadow-lg mt-3 auth-colorBtn">Entrar</button>
                     </form>
                     <div class="text-center mt-3 text-lg fs-5">
-                        <p class="text-gray-600">¿Aún no tienes una cuenta? <a href="<?php echo $ruta; ?>register" class="font-bold">Crear cuenta</a>.</p>
+                        <!-- <p class="text-gray-600">¿Aún no tienes una cuenta? <a href="<?php echo $ruta; ?>register" class="font-bold">Crear cuenta</a>.</p> -->
                         <p><a class="font-bold" href="<?php echo $ruta; ?>forgot-password">Recuperar contraseña</a>.</p>
                     </div>
                 </div>

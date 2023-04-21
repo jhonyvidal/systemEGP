@@ -139,7 +139,7 @@
                         ?>
                         <hr>
                         <div class="dropdown">
-                            <a href="#" class="sidebar-link d-flex align-items-center link-dark text-decoration-none dropdown-toggle show" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="true">
+                            <a href="#" class="sidebar-link d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="true">
                                 <img src="<?php echo $usuario["foto"]; ?>" alt="" width="32" height="32" class="rounded-circle me-2">
                                 <strong><?php echo $usuario["usuarioLink"]; ?></strong>
                             </a>

@@ -46,8 +46,8 @@ $turnos = ControladorGestionTurnos::ctrMostrarTurnosFinalizados($op, $item, $val
                   <th>#</th>
                   <th>Hora Inicio</th>
                   <th>Hora Fin</th>
-                  <th>Dpto</th>
                   <th>Usuario</th>
+                  <th>Dpto</th>
                   <th>Maquina</th>
                   <th>Buenos</th>
                   <th>Malos</th>
@@ -62,19 +62,14 @@ $turnos = ControladorGestionTurnos::ctrMostrarTurnosFinalizados($op, $item, $val
                   <td><?php echo $value["id"]; ?></td>
                   <td><?php echo $value["horaInicio"]?></td>
                   <td><?php echo $value["horaFin"]?>
-                  <td><?php 
-                    $item = "id"; 
-                    $valor = $value["idDpto"];
-                    $dpto = ControladorGestionTurnos::ctrMostrarDptoDelTurno($item, $valor);
-                    echo $dpto["nombre"];
-                    ?></td> 
                   <td><?php echo $usuario["nombre"]?></td>
                   <td><?php 
-                    $item = "id"; 
-                    $valor = $value["idMaquina"];
-                    $maquina = ControladorGestionTurnos::ctrMostrarMaquinaDelTurno($item, $valor);
-                       if(isset($maquina["nombre"])) { echo $maquina["nombre"]; }else{ echo "No"; } ?>
-                         
+                    $valor = $value["idProducto"];
+                    $producto = ControladorGestionMaquinas::ctrMostrarProductoId($valor);
+                    echo $producto["proceso"];
+                    ?></td> 
+                  <td><?php ;
+                       if(isset($producto["nombre"])) { echo $producto["nombre"]; }else{ echo "No"; } ?>
                        </td>
                   <td><?php echo $value["pBuenos"]?></td>
                   <td><?php echo $value["pMalos"]?></td>

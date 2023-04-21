@@ -4,10 +4,13 @@ const social_panel_container = document.querySelector('.social-panel-container')
 
 floating_btn.addEventListener('click', () => {
 	social_panel_container.classList.toggle('visible')
+	$(".social-panel-container").show()
+	
 });
 
 close_btn.addEventListener('click', () => {
 	social_panel_container.classList.remove('visible')
+	$(".social-panel-container").hide()
 });
 $(document).ready(function(){
 	/*=============================================
@@ -125,7 +128,7 @@ $(document).ready(function(){
 				success: function(respuesta){
 					$(".social-panel-container").hide()
 					setTimeout(()=> nextStep(current_fs,next_fs), 500)	
-
+					clearInputs()
 					window.parent.scroll({
 						top: 300,
 					});
@@ -135,6 +138,17 @@ $(document).ready(function(){
 				}
 		})
 	});
+
+	function clearInputs(){
+		$("#HoraInicioTurno").val("")
+		$("#HoraFinTurno").val("")
+		$("#Recurso").val("")
+		$("#Descripción").val("")
+		$("#Proceso").val("")
+		$("#Artículo").val("")
+		$("#Unidad").val("")
+		$("#Rendimiento").val("")
+	}
 	/*=============================================
 		BOTON INICIAR O FINALIZAR PARADA
 	=============================================*/

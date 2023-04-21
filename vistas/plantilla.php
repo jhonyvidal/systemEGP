@@ -31,7 +31,7 @@ if(isset($_GET["pagina"]))
 		      include "paginas/".$_GET["pagina"].".php";
 	           }
     }else{
-	include "paginas/register.php";
+	include "paginas/login.php";
 }
 ?>
 <!-- jQuery library -->
