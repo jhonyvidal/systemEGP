@@ -5,6 +5,14 @@ const social_panel_container = document.querySelector('.social-panel-container')
 floating_btn.addEventListener('click', () => {
 	social_panel_container.classList.toggle('visible')
 	$(".social-panel-container").show()
+
+	let horaFin = document.getElementById("HoraFinTurno");
+	let finishDate = horaFin.valueAsDate
+	let horaInicio = document.getElementById("HoraInicioTurno");
+	let startDate = horaInicio.valueAsDate
+	let limit = ((finishDate.getTime() - startDate.getTime()) / 1000) /60;
+	let units = (limit/60) * $("#Rendimiento").val()
+	$("#cantidadEsperada").html(units)
 	
 });
 
@@ -249,7 +257,8 @@ $(document).ready(function(){
 		 ARTICULOS SELECT CHANGES 
 	=============================================*/
 	$("#Artículo").change(function(){
-		$("#tituloParadas").html($("#tituloParadas").html() + ' - '+ $(this).children("option:selected").html())
+		$("#tituloParadas").html("")
+		$("#tituloParadas").html($(this).children("option:selected").html())
 		$("#Unidad").val($(this).children("option:selected").attr("unidad"))
 		$("#Rendimiento").val($(this).children("option:selected").attr("velocidad"))
 	});
@@ -355,6 +364,54 @@ $(document).ready(function(){
 		})
 
 	});
+
+	$("#HoraFinTurno").change(function(){
+		let horaFin = document.getElementById("HoraFinTurno");
+		let finishDate = horaFin.valueAsDate
+		let horaInicio = document.getElementById("HoraInicioTurno");
+		let startDate = horaInicio.valueAsDate
+		let limit = ((finishDate.getTime() - startDate.getTime()) / 1000) /60;
+
+		if(limit < 0){
+			finishDate.setHours(finishDate.getHours() + 24)
+			limit = ((finishDate.getTime() - startDate.getTime()) / 1000) /60;
+			console.log(limit)
+		}
+		
+		if(limit < 60){
+			alert("El turno no puede ser inferior a 1 hora")
+			$(this).val("")
+		}
+	})
+
+	$("#fechaInicio").change(function(){
+		let horaFinTurno = document.getElementById("HoraFinTurno");
+		let finishTurnoDate = horaFinTurno.valueAsDate
+		let horaInicioTurno = document.getElementById("HoraInicioTurno");
+		let startTurnoDate = horaInicioTurno.valueAsDate
+
+		let horaInicio = document.getElementById("fechaInicio");
+		let startDate = horaInicio.valueAsDate
+		if(startDate.getTime() < startTurnoDate.getTime() ||  startDate.getTime() > finishTurnoDate.getTime()){
+			alert("La hora de la parada debe estar dentro del horario del turno.")
+			$(this).val("");
+		}
+	})
+
+	$("#fechaFin").change(function(){
+		let horaFinTurno = document.getElementById("HoraFinTurno");
+		let finishTurnoDate = horaFinTurno.valueAsDate
+		let horaInicioTurno = document.getElementById("HoraInicioTurno");
+		let startTurnoDate = horaInicioTurno.valueAsDate
+
+		let horaFin = document.getElementById("fechaFin");
+		let startDate = horaFin.valueAsDate
+		if(startDate.getTime() < startTurnoDate.getTime() ||  startDate.getTime() > finishTurnoDate.getTime()){
+			alert("La hora de la parada debe estar dentro del horario del turno.")
+			$(this).val("");
+		}
+	})
+	
 
 	/*=============================================
       FUNCION SIGUIENTE PASO

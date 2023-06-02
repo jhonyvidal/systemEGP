@@ -2,7 +2,7 @@
 
 $item = "idUsuario";
 $valor = $usuario["id"];
-$estado = 1;
+$estado = 0;
 $op = 3;
 $turnos = ControladorGestionTurnos::ctrMostrarTurnosFinalizados($op, $item, $valor, $estado);
 ?>
@@ -90,17 +90,21 @@ $turnos = ControladorGestionTurnos::ctrMostrarTurnosFinalizados($op, $item, $val
                   <td>
                   <?php 
                      $producto = ControladorGestionMaquinas::ctrMostrarProductoId($value['idProducto']);
-                     $unidadesEsperadas = $producto['velocidad'];
+                    
                      $horasProgramadas = 24;
-                     $item = "idTurno"; 
+                     $item = "id"; 
                      $valor = $value["id"];
                      $total = ControladorGestionTurnos::ctrTotalParadasTurno($item, $valor);
-                     $disponibilidad = round((1- (($total["Total"] / 60) / $horasProgramadas)) * 100,1); 
+                     $unidadesEsperadas = $producto['velocidad'] * ($total["turno"] / 60) ;
+                   
+                     $dis = (1- (($total["Total"] / 60) / $total["turno"] ));
+                     $rend = (($value["pBuenos"] + $value["pMalos"]) / $unidadesEsperadas);
+                     $cal = $value["pMalos"] == 0 ? 1:(1-($value["pMalos"] / ($value["pBuenos"] + $value["pMalos"])));
+
+                     $disponibilidad = round((1- (($total["Total"] / 60) / $total["turno"] )) * 100,1); 
                      $rendimiento = round((($value["pBuenos"] + $value["pMalos"]) / $unidadesEsperadas) * 100,2);
                      $calidad = round($value["pMalos"] == 0 ? 100:(1-($value["pMalos"] / ($value["pBuenos"] + $value["pMalos"]))) * 100 ,1);
-                     $newOee =  round((1- (($total["Total"] / 60) / $horasProgramadas) * 
-                                ((($value["pBuenos"] + $value["pMalos"]) / $unidadesEsperadas) * 
-                                $value["pMalos"] !== 0 ? 1-($value["pMalos"] / ($value["pBuenos"] + $value["pMalos"])): 100)) * 100,2);
+                     $newOee =  round( ($dis * $rend * $cal) * 100,2);
                      $oee = ((1440 - $total["Total"]) * 100) / 1440;
                     ?>
                     <div class="circle-container" id="colOEE<?php echo $key ?>" oee="<?php echo $newOee ?>"></div>

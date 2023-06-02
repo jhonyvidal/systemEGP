@@ -245,6 +245,15 @@
 
 			<ul>
 				<li>
+					<div style="text-align: center;margin-top: -40px;">
+						<label>Cantidad esperada</label>
+						<label id="cantidadEsperada"></label>
+					</div>
+				</li>
+			</ul>
+			<ul>
+				
+				<li>
 				<div style="text-align: center;">
 					<label>Cantidad productos buenos</label>
 					<div class="divInputPlus">

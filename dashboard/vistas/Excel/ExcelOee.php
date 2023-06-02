@@ -11,7 +11,7 @@ require_once '../../modelos/general.modelo.php';
 
         $item = "idUsuario";
         $valor = $_GET["user"];
-        $estado = 1;
+        $estado = 0;
         $op = 3;
         $turnos = ControladorGestionTurnos::ctrMostrarTurnosFinalizados($op, $item, $valor, $estado);
 
@@ -28,10 +28,11 @@ require_once '../../modelos/general.modelo.php';
             $unidadesEsperadas = $producto['velocidad'];
             $horasProgramadas = 24;
 
-            $item = "idTurno"; 
+            $item = "id"; 
             $valor = $value["id"];
             $total = ControladorGestionTurnos::ctrTotalParadasTurno($item, $valor);
-            $paradas = ControladorGestionTurnos::ctrMostrarParadasTurnoActual($item, $valor);
+            $item2 = "idTurno";
+            $paradas = ControladorGestionTurnos::ctrMostrarParadasTurnoActual($item2, $valor);
             // $arrayParadas=''; $arrayActividad='';  $arrayTiempoParada='';
 
             $disponibilidad = round((1- (($total["Total"] / 60) / $horasProgramadas)) * 100,1); 

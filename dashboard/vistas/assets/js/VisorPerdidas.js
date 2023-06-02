@@ -112,7 +112,7 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
             TotalDis=0,TotalRen=0,TotalCal=0,Total=0,
             res.forEach(function(ind) {
                 var Disponibilidad = (1- ((parseFloat(ind.total) / 60) / horasProgramadas)).toFixed(2);
-                var Rendimiento = ((parseFloat(ind.buenos) + parseFloat(ind.malos)) / parseFloat(ind.velocidad)).toFixed(2)
+                var Rendimiento = ((parseFloat(ind.buenos) + parseFloat(ind.malos)) / parseFloat(parseFloat(ind.total) / 60 * ind.velocidad)).toFixed(2)
                 var Calidad = (parseFloat(ind.malos) !== 0 ? (1-(parseFloat(ind.malos) / (parseFloat(ind.buenos) + parseFloat(ind.malos))))  : 100).toFixed(2)
                 array.push(Disponibilidad)
                 array2.push(Rendimiento)
@@ -376,8 +376,8 @@ function CrearGraficaVisor(obj,component,label,headers,array,type){
             headers=[]
             TotalDis=0,TotalRen=0,TotalCal=0,Total=0,
             res.forEach(function(ind) {
-                var Disponibilidad = (1- ((parseFloat(ind.total) / 60) / horasProgramadas)).toFixed(2);
-                var Rendimiento = ((parseFloat(ind.buenos) + parseFloat(ind.malos)) / parseFloat(ind.velocidad)).toFixed(2)
+                var Disponibilidad = (1 - (parseFloat(ind.paradas) / 60) / (parseFloat(ind.total) / 60)).toFixed(2);
+                var Rendimiento = ((parseFloat(ind.buenos) + parseFloat(ind.malos)) / parseFloat(parseFloat(ind.total) / 60 * ind.velocidad)).toFixed(2)
                 var Calidad = (parseFloat(ind.malos) !== 0 ? (1-(parseFloat(ind.malos) / (parseFloat(ind.buenos) + parseFloat(ind.malos))))  : 100).toFixed(2)
                 array.push(Disponibilidad)
                 array2.push(Rendimiento)
